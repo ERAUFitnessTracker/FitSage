@@ -1,0 +1,4 @@
+#Thu Feb 23 19:32:59 EST 2023
+base.0=C\:\\Users\\aweso\\Documents\\ERAU\\ERAU 22-23\\SE300\\Project\\UI\\UI-draft1\\ui_draft1\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
