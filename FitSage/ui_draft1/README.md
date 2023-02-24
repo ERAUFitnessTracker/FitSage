@@ -1,16 +1,6 @@
 # ui_draft1
 
-A new Flutter project.
+A draft of the app's UI with basic menu switching functionality
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="Screenshot_1677258131.png" width="200" />
+<img src="Screenshot_1677258932.png" width="200" />
