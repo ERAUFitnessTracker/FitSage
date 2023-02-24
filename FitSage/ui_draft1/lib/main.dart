@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'bioData.dart';
+import 'bio_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -147,8 +147,6 @@ class WorkoutPage extends StatelessWidget {
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  //This is just a placeholder :3
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,7 +161,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const ProfileText(),
-                WhiteBoxForData(),
+                const WhiteBoxForData(),
                 Expanded(
                     child: Align(
                   alignment: Alignment.bottomCenter,
