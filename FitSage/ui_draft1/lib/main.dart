@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'bioData.dart';
 
 void main() {
   runApp(const MyApp());
@@ -160,179 +161,24 @@ class ProfilePage extends StatelessWidget {
             padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const <Widget>[
-                ProfileText(),
+              children: <Widget>[
+                const ProfileText(),
                 WhiteBoxForData(),
                 Expanded(
                     child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: BackButton(),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    tooltip: 'Back To Home',
+                    backgroundColor: const Color(0xFF99a98c),
+                    child: const Icon(Icons.close),
+                  ),
                 ))
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class BackButton extends StatelessWidget {
-  const BackButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-      child: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        tooltip: 'Back To Home',
-        backgroundColor: const Color(0xFF99a98c),
-        child: const Icon(Icons.close),
-      ),
-    );
-  }
-}
-
-//This is where the actual information of the user will be
-class WhiteBoxForData extends StatelessWidget {
-  const WhiteBoxForData({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 350,
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 20, 0, 100),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                NameDisplay(),
-                WeightDisplay(),
-                HeightDisplay(),
-                BMIDisplay(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BMIDisplay extends StatelessWidget {
-  const BMIDisplay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        "Body Mass Index (BMI) \n",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: ".SF UI Display",
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.normal,
-          color: Color(0xFF3e2723),
-          letterSpacing: 1.0,
-        ),
-      ),
-    );
-  }
-}
-
-class HeightDisplay extends StatelessWidget {
-  const HeightDisplay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        "Height \n",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: ".SF UI Display",
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.normal,
-          color: Color(0xFF3e2723),
-          letterSpacing: 1.0,
-        ),
-      ),
-    );
-  }
-}
-
-class WeightDisplay extends StatelessWidget {
-  const WeightDisplay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        "Weight \n",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: ".SF UI Display",
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.normal,
-          color: Color(0xFF3e2723),
-          letterSpacing: 1.0,
-        ),
-      ),
-    );
-  }
-}
-
-class NameDisplay extends StatelessWidget {
-  const NameDisplay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        "Name \n",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: ".SF UI Display",
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.normal,
-          color: Color(0xFF3e2723),
-          letterSpacing: 1.0,
         ),
       ),
     );
