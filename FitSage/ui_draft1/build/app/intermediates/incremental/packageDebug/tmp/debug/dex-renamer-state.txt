@@ -1,4 +1,4 @@
-#Fri Feb 24 16:32:58 EST 2023
-base.0=C\:\\Users\\aweso\\Documents\\ERAU\\ERAU 22-23\\SE300\\Project\\FitnessTracker\\FitSage\\ui_draft1\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
+#Sat Feb 25 14:39:13 EST 2023
+base.0=C\:\\Users\\48pam\\OneDrive\\Documents\\ERAU\\22-23\\Spring\\SE 300\\FitSage\\FitnessTracker\\FitSage\\ui_draft1\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
+path.0=classes.dex
