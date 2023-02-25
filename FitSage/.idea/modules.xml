@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FitSage.iml" filepath="$PROJECT_DIR$/FitSage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui_draft1/ui_draft1.iml" filepath="$PROJECT_DIR$/ui_draft1/ui_draft1.iml" />
+    </modules>
+  </component>
+</project>
