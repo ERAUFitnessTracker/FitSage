@@ -24,7 +24,7 @@
 21        android:icon="@mipmap/ic_launcher"
 22        android:label="ui_draft1" >
 23        <activity
-24            android:name="com.example.ui_draft1.MainActivity"
+24            android:name="com.example.ui_draft1.FSFlutter"
 25            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
 26            android:exported="true"
 27            android:hardwareAccelerated="true"

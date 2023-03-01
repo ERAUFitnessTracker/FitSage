@@ -1,10 +1,15 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'bio_data.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:ui_draft1/userData.dart';
+import 'WhiteBoxForData.dart';
+import 'user.dart';
+import 'DatabaseHelper.dart';
+import 'package:path/path.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,6 +34,7 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 1;
@@ -146,7 +152,6 @@ class WorkoutPage extends StatelessWidget {
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,29 +162,29 @@ class ProfilePage extends StatelessWidget {
           //Column where all the elements will be
           child: Padding(
             padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                const ProfileText(),
-                const WhiteBoxForData(),
-                Expanded(
-                    child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    tooltip: 'Back To Home',
-                    backgroundColor: const Color(0xFF99a98c),
-                    child: const Icon(Icons.close),
-                  ),
-                ))
-              ],
+              child: ListView(
+                children: <Widget>[
+                  const ProfileText(),
+                  const WhiteBoxForData(),
+                  Expanded(
+                      child: Align(
+                        heightFactor: 1.18,
+                    alignment: Alignment.bottomCenter,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      tooltip: 'Back To Home',
+                      backgroundColor: const Color(0xFF99a98c),
+                      child: const Icon(Icons.close),
+                    ),
+                  ))
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -187,7 +192,6 @@ class ProfileText extends StatelessWidget {
   const ProfileText({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -246,3 +250,5 @@ class ProfileText extends StatelessWidget {
     );
   }
 }
+
+

@@ -34,7 +34,7 @@ migration:
       create_revision: b06b8b2710955028a6b562f5aa6fe62941d6febf
       base_revision: b06b8b2710955028a6b562f5aa6fe62941d6febf
 
-  # User provided section
+  # com.example.ui_draft1.User provided section
 
   # List of Local paths (relative to this file) that should be
   # ignored by the migrate tool.

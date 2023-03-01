@@ -10,3 +10,5 @@ com.example.ui_draft1.app-rs-8 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spri
 com.example.ui_draft1.app-mergeDebugResources-9 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spring\SE 300\FitSage\FitnessTracker\FitSage\ui_draft1\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
 com.example.ui_draft1.app-mergeDebugResources-10 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spring\SE 300\FitSage\FitnessTracker\FitSage\ui_draft1\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
 com.example.ui_draft1.app-merged_res-11 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spring\SE 300\FitSage\FitnessTracker\FitSage\ui_draft1\build\app\intermediates\merged_res\debug
+com.example.ui_draft1.app-packaged_res-12 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spring\SE 300\FitSage\FitnessTracker\FitSage\ui_draft1\build\path_provider_android\intermediates\packaged_res\debug
+com.example.ui_draft1.app-packaged_res-13 C:\Users\48pam\OneDrive\Documents\ERAU\22-23\Spring\SE 300\FitSage\FitnessTracker\FitSage\ui_draft1\build\sqflite\intermediates\packaged_res\debug
