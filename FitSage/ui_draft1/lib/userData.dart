@@ -7,26 +7,26 @@ class UserDataPrint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-          return SizedBox(
-            width: 350,
-            height: 580,
-            child: Card(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  NameDisplay(),
-                  NameFromDatabase(),
-                  WeightDisplay(),
-                  WeightFromDatabase(),
-                  HeightDisplay(),
-                  HeightFromDatabase(),
-                  AgeDisplay(),
-                  AgeFromDatabase(),
-                  GenderDisplay(),
-                  GenderFromDatabase(),
-                ],
-              ),
-            ),
+    return SizedBox(
+      width: 350,
+      height: 580,
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            NameDisplay(),
+            NameFromDatabase(),
+            WeightDisplay(),
+            WeightFromDatabase(),
+            HeightDisplay(),
+            HeightFromDatabase(),
+            AgeDisplay(),
+            AgeFromDatabase(),
+            GenderDisplay(),
+            GenderFromDatabase(),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -71,7 +71,7 @@ class NameFromDatabase extends StatelessWidget {
             if (users.isNotEmpty) {
               final user = users[0];
               return Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Text(
                   (user['name']).toString(),
                   textAlign: TextAlign.center,
@@ -121,8 +121,9 @@ class WeightDisplay extends StatelessWidget {
 }
 
 class WeightFromDatabase extends StatelessWidget {
-  const WeightFromDatabase(
-      {super.key,});
+  const WeightFromDatabase({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +135,7 @@ class WeightFromDatabase extends StatelessWidget {
             if (users.isNotEmpty) {
               final user = users[0];
               return Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Text(
                   (user['weight']).toString(),
                   textAlign: TextAlign.center,
@@ -156,7 +157,6 @@ class WeightFromDatabase extends StatelessWidget {
           }
         });
   }
-
 }
 
 class HeightDisplay extends StatelessWidget {
@@ -199,7 +199,7 @@ class HeightFromDatabase extends StatelessWidget {
             if (users.isNotEmpty) {
               final user = users[0];
               return Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Text(
                   (user['height']).toString(),
                   textAlign: TextAlign.center,
@@ -327,7 +327,7 @@ class GenderFromDatabase extends StatelessWidget {
             if (users.isNotEmpty) {
               final user = users[0];
               return Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Text(
                   (user['gender']).toString(),
                   textAlign: TextAlign.center,
@@ -400,10 +400,3 @@ class GenderFromDatabase extends StatelessWidget {
 //     );
 //   }
 // }
-
-
-
-
-
-
-

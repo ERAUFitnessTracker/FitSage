@@ -6,7 +6,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:ui_draft1/userData.dart';
 
 import 'UserForm.dart';
-import 'WhiteBoxForData.dart';
 import 'user.dart';
 
 class DatabaseHelper {
@@ -21,7 +20,7 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'my_database.db');
+    String path = join(await getDatabasesPath(), 'my_database.sqlite');
 
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -64,6 +63,7 @@ class DatabaseHelper {
     final Database db = await instance.database;
     return await db.update('users',
         user.toMap(),
+        where: 'id = 0',
     );
   }
 
@@ -94,7 +94,7 @@ class DatabaseHelper {
 
   static Future<List<Map<String, dynamic>>> getUsers() async {
     final Database database = await openDatabase(
-      join(await getDatabasesPath(), 'my_database.db'),
+      join(await getDatabasesPath(), 'my_database.sqlite'),
     );
     return database.query('users');
   }
@@ -110,8 +110,10 @@ class DatabaseCheck extends StatelessWidget {
         if (snapshot.hasData && snapshot.data!) {
           // If the database has data, display it instead of the form
           return const UserDataPrint();
+          // return const UserForm();
         } else {
           // If the database is empty, display the form
+          // return const UserDataPrint();
           return const UserForm();
         }
       },

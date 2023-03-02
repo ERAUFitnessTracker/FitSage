@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'user.dart';
 import 'DatabaseHelper.dart';
-import 'userData.dart';
 
 class UserForm extends StatefulWidget {
   const UserForm({super.key});
@@ -28,13 +27,13 @@ class _UserFormState extends State<UserForm>{
       child: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
                 validator: (value) {
@@ -47,7 +46,7 @@ class _UserFormState extends State<UserForm>{
               TextFormField(
                 controller: _weightController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Weight (in lbs)',
                 ),
                 validator: (value) {
@@ -60,7 +59,7 @@ class _UserFormState extends State<UserForm>{
               TextFormField(
                 controller: _heightController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Height (in inches)',
                 ),
                 validator: (value) {
@@ -73,7 +72,7 @@ class _UserFormState extends State<UserForm>{
               TextFormField(
                 controller: _ageController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Age',
                 ),
                 validator: (value) {
@@ -85,7 +84,7 @@ class _UserFormState extends State<UserForm>{
               ),
               TextFormField(
                 controller: _genderController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Gender',
                 ),
                 validator: (value) {
@@ -119,7 +118,6 @@ class _UserFormState extends State<UserForm>{
                       while (!(await DatabaseHelper.instance.isIDEmpty(lastID))) {
                         lastID++;
                       }
-
                       try {
                         if (_formKey.currentState!.validate()) {
                           User user = User(
@@ -130,15 +128,27 @@ class _UserFormState extends State<UserForm>{
                             age: int.parse(_ageController.text),
                             gender: _genderController.text,
                           );
-                          int id = await DatabaseHelper.instance.insert(user);
+                          int id;
+                          String textForSnackBar;
+                          if (await DatabaseHelper.instance.hasData()) {
+                             id = await DatabaseHelper.instance.replaceUser(
+                                user);
+                             textForSnackBar = 'User $id updated!';
+                          } else {
+                             id = await DatabaseHelper.instance.insert(
+                                user);
+                             textForSnackBar = 'User added with ID: $id';
+                          }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('User added with ID: $id'),
+                              content: Text(textForSnackBar),
                             ),
                           );
                         }
                       } catch (e) {
-                        print(e);
+                        if (kDebugMode) {
+                          print(e);
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,4 +1,4 @@
-import 'package:sqflite/sqflite.dart';
+
 class User {
   int id;
   String name;
