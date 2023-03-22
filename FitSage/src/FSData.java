@@ -1,6 +1,7 @@
-import java.sql.*;
-
-import java.sql.*;
+//  OBSOLETE
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class FSData {
     private final Connection connection;

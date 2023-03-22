@@ -1,3 +1,4 @@
+//  OBSOLETE
 import java.util.*;
 
 public class BiometricInput {

@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
-import 'WhiteBoxForData.dart';
+import 'package:ui_draft1/UserDataPrint.dart';
+import 'UserForm.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'calendar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UI Draft 2',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
       home: const MyHomePage(),
+      theme: ThemeData().copyWith(
+        scaffoldBackgroundColor: const Color(0xFFe9e6df),
+        colorScheme:
+            ThemeData().colorScheme.copyWith(primary: const Color(0xFF99a98c)),
+      ),
     );
   }
 }
@@ -48,7 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFe9e6df),
       body: Center(
         child: _pages[_selectedIndex],
       ),
@@ -105,7 +107,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
+        const CalendarPage(),
         Positioned(
           top: 40.0,
           right: 20.0,
@@ -115,15 +119,9 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                  MaterialPageRoute(builder: (context) => const ProfilePage1()),
                 );
               }),
-        ),
-        Center(
-          child: Text(
-            'Home Page',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
         ),
       ],
     );
@@ -144,25 +142,42 @@ class WorkoutPage extends StatelessWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage1 extends StatelessWidget {
+  const ProfilePage1({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'PROFILE',
+          style: GoogleFonts.ubuntu(
+            textStyle: const TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+              color: Color(0xFFFFFFFF),
+              letterSpacing: 3.0,
+            ),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF99a98c),
+      ),
       backgroundColor: const Color(0xFFe9e6df),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const EdgeInsets.only(top: 0),
           //Column where all the elements will be
           child: Padding(
             padding: const EdgeInsets.all(40),
-            child: ListView(
+            child: Column(
               children: <Widget>[
-                const ProfileText(),
-                const WhiteBoxForData(),
+                const UserDataPrint(),
+                // const UserForm(),
                 Expanded(
                     child: Align(
-                  heightFactor: 1.18,
                   alignment: Alignment.bottomCenter,
                   child: FloatingActionButton(
                     onPressed: () {
@@ -182,60 +197,50 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class ProfileText extends StatelessWidget {
-  const ProfileText({
-    super.key,
-  });
+class ProfilePage2 extends StatelessWidget {
+  const ProfilePage2({super.key});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 350,
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'PROFILE',
+          style: GoogleFonts.ubuntu(
+            textStyle: const TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+              color: Color(0xFFFFFFFF),
+              letterSpacing: 3.0,
             ),
-          ],
+          ),
         ),
-        child: Card(
-          color: const Color(0xFF99a98c),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF99a98c),
+      ),
+      backgroundColor: const Color(0xFFe9e6df),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+            padding: const EdgeInsets.all(40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the text
-              children: [
-                Stack(
-                  children: [
-                    const Text(
-                      "PROFILE",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: ".SF UI Display",
-                        fontSize: 50.0,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal,
-                        color: Color(0xFFFFFFFF),
-                        letterSpacing: 3.0,
-                      ),
-                    ),
-                    Text(
-                      "PROFILE",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: ".SF UI Display",
-                        fontSize: 50.0,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.white.withOpacity(0.2),
-                        letterSpacing: 3.0,
-                      ),
-                    ),
-                  ],
-                ),
+              children: <Widget>[
+                const UserForm(),
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    tooltip: 'Back To Home',
+                    backgroundColor: const Color(0xFF99a98c),
+                    child: const Icon(Icons.close),
+                  ),
+                ))
               ],
             ),
           ),
