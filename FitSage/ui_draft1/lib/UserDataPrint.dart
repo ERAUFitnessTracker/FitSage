@@ -287,7 +287,7 @@ class EditButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProfilePage2()));
+            MaterialPageRoute(builder: (context) => const ProfileFormPage()));
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF99a98c),
@@ -306,60 +306,3 @@ class EditButton extends StatelessWidget {
     );
   }
 }
-
-// class BMIDisplay extends StatelessWidget {
-//   const BMIDisplay({
-//     super.key,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Padding(
-//       padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-//       child: Text(
-//         "Body Mass Index (BMI) \n",
-//         textAlign: TextAlign.center,
-//         style: TextStyle(
-//           fontFamily: ".SF UI Display",
-//           fontSize: 25.0,
-//           fontWeight: FontWeight.w600,
-//           fontStyle: FontStyle.normal,
-//           color: Color(0xFF3e2723),
-//           letterSpacing: 1.0,
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class BMIFromDatabase extends StatelessWidget {
-//   const BMIFromDatabase({
-//     super.key,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Padding(
-//       padding: EdgeInsets.all(0.0),
-//       child: Text(
-//         "BMI \n",
-//         textAlign: TextAlign.center,
-//         style: TextStyle(
-//           fontFamily: ".SF UI Display",
-//           fontSize: 15,
-//           fontWeight: FontWeight.w600,
-//           fontStyle: FontStyle.normal,
-//           color: Color(0xFF3e2723),
-//           letterSpacing: 1.0,
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
-
-

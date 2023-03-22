@@ -7,10 +7,10 @@ class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
 
   @override
-  State<CalendarPage> createState() => _CalendarState();
+  State<CalendarPage> createState() => _CalendarPageState();
 }
 
-class _CalendarState extends State<CalendarPage> {
+class _CalendarPageState extends State<CalendarPage> {
   DateTime today = DateTime.now();
 
   @override

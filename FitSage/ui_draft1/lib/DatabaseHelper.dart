@@ -152,26 +152,3 @@ class DatabaseHelper {
     }
   }
 }
-
-//// MOVE PAGE BASED ON USER EXISTENCE ////
-class DatabaseCheck extends StatelessWidget {
-  const DatabaseCheck({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: DatabaseHelper.instance.hasData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data!) {
-          // If the database has data, display it instead of the form
-          return const UserDataPrint();
-          // return const UserForm();
-        } else {
-          // If the database is empty, display the form
-          return const UserForm();
-        }
-      },
-    );
-  }
-}
-/////////////////////

@@ -119,7 +119,8 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage1()),
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileDataPage()),
                 );
               }),
         ),
@@ -142,8 +143,8 @@ class WorkoutPage extends StatelessWidget {
   }
 }
 
-class ProfilePage1 extends StatelessWidget {
-  const ProfilePage1({super.key});
+class ProfileDataPage extends StatelessWidget {
+  const ProfileDataPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,8 +198,8 @@ class ProfilePage1 extends StatelessWidget {
   }
 }
 
-class ProfilePage2 extends StatelessWidget {
-  const ProfilePage2({super.key});
+class ProfileFormPage extends StatelessWidget {
+  const ProfileFormPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

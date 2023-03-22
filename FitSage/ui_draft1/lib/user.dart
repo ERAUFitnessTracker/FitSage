@@ -1,4 +1,3 @@
-
 class User {
   int id;
   String name;
@@ -7,7 +6,13 @@ class User {
   int age;
   String gender;
 
-  User({required this.id, required this.name, required this.weight, required this.height, required this.age, required this.gender});
+  User(
+      {required this.id,
+      required this.name,
+      required this.weight,
+      required this.height,
+      required this.age,
+      required this.gender});
 
   Map<String, dynamic> toMap() {
     return {
