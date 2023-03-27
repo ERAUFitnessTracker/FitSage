@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'upperWorkouts.dart';
+import 'lowerWorkouts.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(const WorkoutPage()); // Run the app
@@ -50,18 +51,18 @@ class Lower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => () {
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const UpperWorkouts(),
+            builder: (context) => const LowerWorkouts(),
           ),
         );
       },
       child: const Card(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("something else"),
+          padding: EdgeInsets.all(20.0),
+          child: Text("Lower Workouts"),
         ),
       ),
     );
@@ -75,10 +76,20 @@ class Upper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text("Upper"),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UpperWorkouts(),
+          ),
+        );
+      },
+      child: const Card(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text("Upper Workouts"),
+        ),
       ),
     );
   }
