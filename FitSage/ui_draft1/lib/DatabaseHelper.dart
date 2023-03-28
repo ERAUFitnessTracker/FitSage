@@ -35,18 +35,18 @@ class DatabaseHelper {
         weight REAL,
         height REAL,
         age INTEGER,
-        gender TEXT
+        gender TEXT,
       )
     ''');
 
-    db.execute('''
-      CREATE TABLE workouts (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        mGroup TEXT,
-        met REAL,
-      )
-    ''');
+    // db.execute('''
+    //   CREATE TABLE workouts (
+    //     id INTEGER PRIMARY KEY,
+    //     name TEXT,
+    //     mGroup TEXT,
+    //     met REAL,
+    //   )
+    // ''');
   }
 
   Future<int> createUser(User user) async {
