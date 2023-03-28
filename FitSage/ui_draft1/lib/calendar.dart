@@ -60,11 +60,9 @@ class Calendar extends StatefulWidget {
 
 class CalendarState extends State<Calendar> {
   DateTime? _selectedDay;
-  DateTime? _focusedDay;
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       _selectedDay = selectedDay;
-      _focusedDay = focusedDay;
     });
   }
 
@@ -82,15 +80,21 @@ class CalendarState extends State<Calendar> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: TableCalendar(
+                daysOfWeekHeight: 30,
                 locale: "en_US",
                 rowHeight: 50,
-                headerStyle: const HeaderStyle(
+                headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
-                  titleTextStyle: TextStyle(
-                    color: Color(0xFF384031),
+                  headerPadding: const EdgeInsets.all(1),
+                  titleTextStyle: const TextStyle(
+                    color: Color.fromARGB(255, 46, 51, 42),
                     fontFamily: ".SF UI Display",
                     fontSize: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFe9e6df),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 focusedDay: DateTime.now(),

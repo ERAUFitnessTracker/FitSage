@@ -3,13 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:ui_draft1/main.dart';
 import 'DatabaseHelper.dart';
-import 'UserForm.dart';
+import 'BiometricInput.dart';
+import 'calculators.dart';
 
 class UserDataPrint extends StatelessWidget {
   const UserDataPrint({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Calculators calculator = Calculators();
+
     return SizedBox(
       width: 370,
       height: 600,
@@ -28,6 +31,10 @@ class UserDataPrint extends StatelessWidget {
             AgeFromDatabase(),
             SizedBox(height: 10),
             GenderFromDatabase(),
+            SizedBox(height: 30),
+            BMIFromDatabase(),
+            SizedBox(height: 10),
+            BFPFromDatabase(),
             SizedBox(height: 50),
             EditButton(),
           ],
@@ -79,7 +86,30 @@ class NameFromDatabase extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("No users found");
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: SizedBox(
+                      height: 59,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(LineAwesomeIcons.user),
+                          floatingLabelAlignment: FloatingLabelAlignment.center,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(),
+                          hintText: 'Name',
+                        ),
+                        readOnly: true,
+                      ),
+                    ),
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();
@@ -128,7 +158,30 @@ class WeightFromDatabase extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("No users found");
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: SizedBox(
+                      height: 59,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(LineAwesomeIcons.weight),
+                          floatingLabelAlignment: FloatingLabelAlignment.center,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(),
+                          hintText: 'Weight (lbs)',
+                        ),
+                        readOnly: true,
+                      ),
+                    ),
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();
@@ -174,7 +227,27 @@ class HeightFromDatabase extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("No users found");
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.ruler),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Height (in)',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();
@@ -220,7 +293,27 @@ class AgeFromDatabase extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("No users found");
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.running),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Age',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();
@@ -268,7 +361,183 @@ class GenderFromDatabase extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("No users found");
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.weight),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Gender',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
+  }
+}
+
+// ignore: must_be_immutable
+class BMIFromDatabase extends StatelessWidget {
+  const BMIFromDatabase({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              double weight = user['weight'];
+              double height = user['height'];
+              double BMI = Calculators().calcBMI(weight, height);
+              String BMIType = BiometricInput(
+                      weight: user['weight'],
+                      height: user['height'],
+                      age: user['age'],
+                      gender: user['gender'])
+                  .bmiType(BMI);
+
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.bar_chart),
+                        labelText: 'Body Mass Index',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: "$BMIType: ${BMI.toStringAsPrecision(4)}",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.bar_chart),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: "Body Mass Index",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
+  }
+}
+
+class BFPFromDatabase extends StatelessWidget {
+  const BFPFromDatabase({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              int age = user['age'];
+              String gender = (user['gender'])[0].toString().toUpperCase() +
+                  (user['gender']).toString().substring(1);
+              double BMI =
+                  Calculators().calcBMI(user['weight'], user['height']);
+              double BFP = Calculators().calcBFP(gender, age, BMI);
+              String BFPType = BiometricInput(
+                      weight: user['weight'],
+                      height: user['height'],
+                      age: user['age'],
+                      gender: user['gender'])
+                  .bfpType(BFP);
+
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.percent),
+                        labelText: 'Body-Fat Percentage',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: "$BFPType: ${BFP.toStringAsPrecision(3)}%",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.percent),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: "Body-Fat Percentage",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
             }
           } else {
             return const CircularProgressIndicator();

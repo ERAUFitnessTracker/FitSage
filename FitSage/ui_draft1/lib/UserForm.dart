@@ -48,6 +48,7 @@ class _UserFormState extends State<UserForm> {
                       final users = snapshot.data!;
                       if (users.isNotEmpty) {
                         final user = users[0];
+
                         String name =
                             (user['name'])[0].toString().toUpperCase() +
                                 (user['name']).toString().substring(1);
