@@ -469,6 +469,7 @@ class _UserFormState extends State<UserForm> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
+                      final messenger = ScaffoldMessenger.of(context);
                       User user = User(
                         id: 0,
                         name: _nameController.text,
@@ -486,7 +487,7 @@ class _UserFormState extends State<UserForm> {
                         id = await DatabaseHelper.instance.createUser(user);
                         textForSnackBar = 'User added with ID: $id';
                       }
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      messenger.showSnackBar(
                         SnackBar(
                           content: Text(textForSnackBar),
                         ),

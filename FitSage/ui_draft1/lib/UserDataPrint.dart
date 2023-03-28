@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -11,8 +13,6 @@ class UserDataPrint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Calculators calculator = Calculators();
-
     return SizedBox(
       width: 370,
       height: 600,

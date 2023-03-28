@@ -3,6 +3,7 @@ import 'package:ui_draft1/UserDataPrint.dart';
 import 'UserForm.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'calendar.dart';
+import 'workout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -125,20 +126,6 @@ class HomePage extends StatelessWidget {
               }),
         ),
       ],
-    );
-  }
-}
-
-class WorkoutPage extends StatelessWidget {
-  const WorkoutPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Workout Menu',
-        style: Theme.of(context).textTheme.headlineMedium,
-      ),
     );
   }
 }

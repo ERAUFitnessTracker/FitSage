@@ -4,17 +4,27 @@ import 'lowerWorkouts.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(const WorkoutPage()); // Run the app
-
 class WorkoutPage extends StatelessWidget {
   const WorkoutPage({super.key});
 
   //This is where you create the MaterialApp. This is used to set constants for the whole app, like themes and properties
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Workout',
-      home: WorkoutHome(),
+    return Expanded(
+      child: Scaffold(
+          body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Upper(),
+              Lower(),
+            ],
+          ),
+        ),
+      )),
     );
   }
 }

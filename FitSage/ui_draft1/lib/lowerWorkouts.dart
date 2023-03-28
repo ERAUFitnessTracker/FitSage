@@ -7,23 +7,18 @@ class LowerWorkouts extends StatelessWidget {
   LowerWorkouts({super.key});
 
   final List _workoutsLower = [
-    'Workout1',
-    'Workout2',
-    'Workout3',
-    'Workout4',
+    'Lower Workout1',
+    'Lower Workout2',
+    'Lower Workout3',
+    'Lower Workout4',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: 750,
             child: ListView.builder(
               itemCount: _workoutsLower.length,
@@ -34,6 +29,21 @@ class LowerWorkouts extends StatelessWidget {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Expanded(
+                child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                tooltip: 'Back To Home',
+                backgroundColor: const Color(0xFF99a98c),
+                child: const Icon(Icons.close),
+              ),
+            )),
+          )
         ],
       ),
     );

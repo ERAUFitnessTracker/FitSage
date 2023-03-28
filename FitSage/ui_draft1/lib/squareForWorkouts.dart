@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SquareWorkoutsList extends StatelessWidget {
   final String child;
 
-  SquareWorkoutsList({required this.child});
+  const SquareWorkoutsList({super.key, required this.child});
   @override
   Widget build(BuildContext context) {
     return Padding(

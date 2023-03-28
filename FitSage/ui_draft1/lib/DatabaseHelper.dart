@@ -1,10 +1,12 @@
+// ignore_for_file: file_names, depend_on_referenced_packages
+
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'UserDataPrint.dart';
-import 'UserForm.dart';
+// import 'UserDataPrint.dart';
+// import 'UserForm.dart';
 import 'user.dart';
 
 class DatabaseHelper {
@@ -64,7 +66,7 @@ class DatabaseHelper {
         where: 'id = ?',
         whereArgs: [id]);
 
-    if (maps.length > 0) {
+    if (maps.isNotEmpty) {
       return maps.map((e) => User.fromMap(e)).toList();
     }
 
@@ -104,14 +106,10 @@ class DatabaseHelper {
   //// CHECK IF USER EXISTS ////
   Future<bool> hasData() async {
     Database db = await instance.database;
-    if (db != null) {
-      final List<Map<String, dynamic>> result =
-          await db.rawQuery('SELECT COUNT(*) FROM users');
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT COUNT(*) FROM users');
 
-      return Sqflite.firstIntValue(result)! > 0;
-    } else {
-      return Future.value(false);
-    }
+    return Sqflite.firstIntValue(result)! > 0;
   }
 
   Future<int> getLastID() async {
