@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'upperWorkouts.dart';
 import 'lowerWorkouts.dart';
+
 //import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(const WorkoutPage()); // Run the app
@@ -55,7 +56,7 @@ class Lower extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const LowerWorkouts(),
+            builder: (context) => LowerWorkouts(),
           ),
         );
       },
@@ -81,7 +82,7 @@ class Upper extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const UpperWorkouts(),
+            builder: (context) => UpperWorkouts(),
           ),
         );
       },
