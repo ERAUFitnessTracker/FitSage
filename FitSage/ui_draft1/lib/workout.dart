@@ -10,16 +10,47 @@ class WorkoutPage extends StatelessWidget {
   //This is where you create the MaterialApp. This is used to set constants for the whole app, like themes and properties
   @override
   Widget build(BuildContext context) {
+    var cardTextStyle = Theme.of(context).textTheme.displaySmall!.copyWith(
+          color: const Color.fromRGBO(255, 255, 255, 1),
+        );
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Upper(),
-              Lower(),
+            children: [
+              BigCardButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpperWorkouts(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Upper Workouts',
+                    style: cardTextStyle,
+                  )),
+              BigCardButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LowerWorkouts(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Lower Workouts',
+                  style: cardTextStyle,
+                ),
+              ),
+              // Upper(), --- I changed the buttons to each use the same Widget. this way we only need one class
+              // Lower(),
             ],
           ),
         ),
@@ -28,77 +59,30 @@ class WorkoutPage extends StatelessWidget {
   }
 }
 
-class WorkoutHome extends StatelessWidget {
-  const WorkoutHome({super.key});
+class BigCardButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final Widget child;
 
-  //Making the Home page of the Workouts :3
+  const BigCardButton(
+      {super.key, required this.onPressed, required this.child});
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Scaffold(
-          body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: SafeArea(
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 40.0),
+        child: Container(
+          width: 350,
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: const Color.fromARGB(255, 153, 169, 140),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Upper(),
-              Lower(),
-            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [child],
           ),
-        ),
-      )),
-    );
-  }
-}
-
-class Lower extends StatelessWidget {
-  const Lower({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LowerWorkouts(),
-          ),
-        );
-      },
-      child: const Card(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Text("Lower Workouts"),
-        ),
-      ),
-    );
-  }
-}
-
-class Upper extends StatelessWidget {
-  const Upper({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UpperWorkouts(),
-          ),
-        );
-      },
-      child: const Card(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Text("Upper Workouts"),
         ),
       ),
     );
