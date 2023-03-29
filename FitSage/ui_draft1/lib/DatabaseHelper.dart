@@ -37,7 +37,7 @@ class DatabaseHelper {
         weight REAL,
         height REAL,
         age INTEGER,
-        gender TEXT,
+        gender TEXT
       )
     ''');
 
@@ -122,16 +122,12 @@ class DatabaseHelper {
   }
 
   static Future<List<Map<String, dynamic>>> getUsers() async {
-    final Database database = await openDatabase(
-      join(await getDatabasesPath(), 'fitsageDB.db'),
-    );
+    final Database database = await instance.database;
     return database.query('users');
   }
 
   Future<String> getUserInfo(String choice) async {
-    final Database database = await openDatabase(
-      join(await getDatabasesPath(), 'fitsageDB.db'),
-    );
+    final Database database = await instance.database;
     List<Map<String, Object?>> users = await database.query('users');
     Map<String, dynamic> user = users[0];
     switch (choice) {
