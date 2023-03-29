@@ -31,8 +31,7 @@ class LowerWorkouts extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(30.0),
-            child: Expanded(
-                child: Align(
+            child: Align(
               alignment: Alignment.bottomCenter,
               child: FloatingActionButton(
                 onPressed: () {
@@ -42,8 +41,8 @@ class LowerWorkouts extends StatelessWidget {
                 backgroundColor: const Color(0xFF99a98c),
                 child: const Icon(Icons.close),
               ),
-            )),
-          )
+            ),
+          ),
         ],
       ),
     );

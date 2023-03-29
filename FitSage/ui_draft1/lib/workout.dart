@@ -10,9 +10,8 @@ class WorkoutPage extends StatelessWidget {
   //This is where you create the MaterialApp. This is used to set constants for the whole app, like themes and properties
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Scaffold(
-          body: SizedBox(
+    return Scaffold(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: SafeArea(
@@ -24,7 +23,7 @@ class WorkoutPage extends StatelessWidget {
             ],
           ),
         ),
-      )),
+      ),
     );
   }
 }
