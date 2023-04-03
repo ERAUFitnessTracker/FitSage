@@ -73,7 +73,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your name.';
+                                return null;
                               }
                               final validChar = RegExp(r'^[a-zA-Z]$');
                               for (int i = 0; i < value.length; i++) {
@@ -107,7 +107,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your name.';
+                                return null;
                               }
                               final validChar = RegExp(r'^[a-zA-Z]$');
                               for (int i = 0; i < value.length; i++) {
@@ -157,7 +157,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your weight in lbs.';
+                                return null;
                               }
                               if (double.tryParse(value) is! double) {
                                 return 'Please enter your weight in lbs.';
@@ -189,7 +189,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your weight in lbs.';
+                                return null;
                               }
                               if (double.tryParse(value) is! double) {
                                 return 'Please enter your weight in lbs.';
@@ -236,7 +236,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your height in inches.';
+                                return null;
                               }
                               if (double.tryParse(value) is! double) {
                                 return 'Please enter your weight in lbs.';
@@ -268,7 +268,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your height in inches.';
+                                return null;
                               }
                               if (double.tryParse(value) is! double) {
                                 return 'Please enter your weight in lbs.';
@@ -316,7 +316,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your age.';
+                                return null;
                               }
                               if (int.tryParse(value) is! int) {
                                 return 'Please enter your age.';
@@ -348,7 +348,7 @@ class _UserFormState extends State<UserForm> {
                             ),
                             validator: (value) {
                               if (value == null) {
-                                return 'Please enter your age.';
+                                return null;
                               }
                               if (int.tryParse(value) is! int) {
                                 return 'Please enter your age.';
@@ -470,15 +470,56 @@ class _UserFormState extends State<UserForm> {
                   onPressed: () async {
                     try {
                       final messenger = ScaffoldMessenger.of(context);
+                      int id;
+                      String name;
+                      double weight;
+                      double height;
+                      int age;
+                      String gender;
+
+                      if (_nameController.text.isEmpty) {
+                        name =
+                            await DatabaseHelper.instance.getUserInfo('name');
+                      } else {
+                        name = _nameController.text;
+                      }
+
+                      if (_weightController.text.isEmpty) {
+                        weight = double.parse(await DatabaseHelper.instance
+                            .getUserInfo('weight'));
+                      } else {
+                        weight = double.parse(_weightController.text);
+                      }
+
+                      if (_heightController.text.isEmpty) {
+                        height = double.parse(await DatabaseHelper.instance
+                            .getUserInfo('height'));
+                      } else {
+                        height = double.parse(_heightController.text);
+                      }
+
+                      if (_ageController.text.isEmpty) {
+                        age = int.parse(
+                            await DatabaseHelper.instance.getUserInfo('age'));
+                      } else {
+                        age = int.parse(_ageController.text);
+                      }
+
+                      if (_genderController == null) {
+                        gender =
+                            await DatabaseHelper.instance.getUserInfo('gender');
+                      } else {
+                        gender = _genderController.toString();
+                      }
+
                       User user = User(
                         id: 0,
-                        name: _nameController.text,
-                        weight: double.parse(_weightController.text),
-                        height: double.parse(_heightController.text),
-                        age: int.parse(_ageController.text),
-                        gender: _genderController.toString(),
+                        name: name,
+                        weight: weight,
+                        height: height,
+                        age: age,
+                        gender: gender,
                       );
-                      int id;
                       String textForSnackBar;
                       if (await DatabaseHelper.instance.hasData()) {
                         id = await DatabaseHelper.instance.updateUser(user);
