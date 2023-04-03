@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_draft1/NutritionPage.dart';
 import 'package:ui_draft1/UserDataPrint.dart';
 import 'UserForm.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -83,20 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class NutritionPage extends StatelessWidget {
-  const NutritionPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Nutrition Menu',
-        style: Theme.of(context).textTheme.headlineMedium,
       ),
     );
   }
