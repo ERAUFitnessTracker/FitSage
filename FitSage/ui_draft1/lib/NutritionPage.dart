@@ -71,12 +71,9 @@ class _NutritionPageState extends State<NutritionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Nutrition Page'),
-      ),
       body: Column(
         children: [
-          const SizedBox(height: 16),
+          const SizedBox(height: 100),
           Expanded(
             child: Center(
               child: _image == null
