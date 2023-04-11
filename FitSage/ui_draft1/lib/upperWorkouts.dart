@@ -1,17 +1,19 @@
-// ignore: file_names
-
 import 'package:flutter/material.dart';
+import 'package:ui_draft1/WorkoutsUpperModel.dart';
 import 'package:ui_draft1/squareForWorkouts.dart';
 
 class UpperWorkouts extends StatelessWidget {
   UpperWorkouts({super.key});
 
-  final List _workoutsUpper = [
-    'Upper Workout1',
-    'Upper Workout2',
-    'Upper Workout3',
-    'Upper Workout4',
+  final List<UpperModel> _workoutsUpper = [
+    UpperModel("pushUps", "Chest", false, 0),
+    UpperModel("Vladimir", "Biceps", false, 1),
+    UpperModel("I love Jack", "XDD", false, 2),
+    UpperModel("Kryptiax", "Erection", false, 3),
+    UpperModel("Other xd :3", "All", false, 4),
   ];
+
+  List<UpperModel> selectedWorkouts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,12 @@ class UpperWorkouts extends StatelessWidget {
             height: 750,
             child: ListView.builder(
               itemCount: _workoutsUpper.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context, int index) {
                 return SquareWorkoutsList(
-                  child: _workoutsUpper[index],
+                  name: _workoutsUpper[index].name,
+                  muscle: _workoutsUpper[index].muscle,
+                  isSelected: _workoutsUpper[index].isSelected,
+                  index: _workoutsUpper[index].index,
                 );
               },
             ),

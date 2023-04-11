@@ -18,16 +18,8 @@ class LowerWorkouts extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 750,
-            child: ListView.builder(
-              itemCount: _workoutsLower.length,
-              itemBuilder: (context, index) {
-                return SquareWorkoutsList(
-                  child: _workoutsLower[index],
-                );
-              },
-            ),
           ),
           Padding(
             padding: const EdgeInsets.all(30.0),
