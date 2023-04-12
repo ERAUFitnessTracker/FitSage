@@ -33,30 +33,26 @@ class _SquareWorkoutsListState extends State<SquareWorkoutsList> {
     int selectedIndex = 0;
     List selectedWorkouts = [];
     return Card(
-      color: Colors.lightGreen,
+      color: const Color(0xFF99a98c),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ListTile(
-          leading: const Icon(
-            Icons.access_alarm,
-            color: Colors.white,
-          ),
           title: Text(
-            widget.name,
+            '\t${widget.name}',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          subtitle: Text(widget.muscle),
+          subtitle: Text('\t${widget.muscle}'),
           trailing: widget.isSelected
-              ? Icon(
+              ? const Icon(
                   Icons.check_circle,
-                  color: Colors.blue[700],
+                  color: Colors.white,
                 )
               : const Icon(
                   Icons.check_circle_outline,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
           onTap: () {
             setState(() {

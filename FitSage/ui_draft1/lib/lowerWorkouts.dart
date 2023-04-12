@@ -1,17 +1,9 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import 'package:ui_draft1/squareForWorkouts.dart';
 
 class LowerWorkouts extends StatelessWidget {
-  LowerWorkouts({super.key});
-
-  final List _workoutsLower = [
-    'Lower Workout1',
-    'Lower Workout2',
-    'Lower Workout3',
-    'Lower Workout4',
-  ];
+  const LowerWorkouts({super.key});
 
   @override
   Widget build(BuildContext context) {

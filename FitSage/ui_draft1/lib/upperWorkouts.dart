@@ -11,6 +11,9 @@ class UpperWorkouts extends StatelessWidget {
     UpperModel("I love Jack", "XDD", false, 2),
     UpperModel("Kryptiax", "Erection", false, 3),
     UpperModel("Other xd :3", "All", false, 4),
+    UpperModel("I <3 dany", "Glutes", false, 5),
+    UpperModel("jim the goat ", "ONG", false, 6),
+    UpperModel("UpperWorkout 7", "Muscle Group", false, 7),
   ];
 
   List selectedWorkouts = [];
