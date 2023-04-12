@@ -5,7 +5,7 @@ import 'package:ui_draft1/squareForWorkouts.dart';
 class UpperWorkouts extends StatelessWidget {
   UpperWorkouts({super.key});
 
-  final List<UpperModel> _workoutsUpper = [
+  List<UpperModel> workoutsUpper = [
     UpperModel("pushUps", "Chest", false, 0),
     UpperModel("Vladimir", "Biceps", false, 1),
     UpperModel("I love Jack", "XDD", false, 2),
@@ -13,7 +13,7 @@ class UpperWorkouts extends StatelessWidget {
     UpperModel("Other xd :3", "All", false, 4),
   ];
 
-  List<UpperModel> selectedWorkouts = [];
+  List selectedWorkouts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,13 @@ class UpperWorkouts extends StatelessWidget {
           SizedBox(
             height: 750,
             child: ListView.builder(
-              itemCount: _workoutsUpper.length,
+              itemCount: workoutsUpper.length,
               itemBuilder: (BuildContext context, int index) {
                 return SquareWorkoutsList(
-                  name: _workoutsUpper[index].name,
-                  muscle: _workoutsUpper[index].muscle,
-                  isSelected: _workoutsUpper[index].isSelected,
-                  index: _workoutsUpper[index].index,
+                  name: workoutsUpper[index].name,
+                  muscle: workoutsUpper[index].muscle,
+                  isSelected: workoutsUpper[index].isSelected,
+                  index: workoutsUpper[index].index,
                 );
               },
             ),
