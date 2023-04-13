@@ -21,7 +21,7 @@ class _CalendarPageState extends State<CalendarPage> {
       backgroundColor: const Color(0xFFe9e6df),
       body: SizedBox(
         child: Padding(
-          padding: const EdgeInsets.only(top: 150.0),
+          padding: const EdgeInsets.only(top: 130.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -41,7 +41,6 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget content() {
     return Column(
       children: [
-        const Text(""),
         Calendar(today: today),
       ],
     );
@@ -64,7 +63,13 @@ class CalendarState extends State<Calendar> {
   DateTime? _selectedDay;
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
-      _selectedDay = selectedDay;
+      if (_selectedDay == null) {
+        _selectedDay = selectedDay;
+      } else if (_selectedDay == selectedDay) {
+        _selectedDay = null;
+      } else if (_selectedDay != null) {
+        _selectedDay = selectedDay;
+      }
     });
   }
 
@@ -83,8 +88,8 @@ class CalendarState extends State<Calendar> {
               padding: const EdgeInsets.all(16),
               child: TableCalendar(
                 daysOfWeekHeight: 30,
+                rowHeight: 40,
                 locale: "en_US",
-                rowHeight: 50,
                 headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
@@ -99,11 +104,11 @@ class CalendarState extends State<Calendar> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
+                sixWeekMonthsEnforced: true,
                 focusedDay: DateTime.now(),
                 firstDay: DateTime.utc(2010, 1, 1),
                 lastDay: DateTime.utc(2030, 12, 31),
                 calendarStyle: const CalendarStyle(
-                  outsideDaysVisible: false,
                   todayDecoration: BoxDecoration(
                     color: Color.fromARGB(183, 233, 230, 223),
                     shape: BoxShape.circle,
@@ -116,7 +121,7 @@ class CalendarState extends State<Calendar> {
                     color: Color(0xFFe9e6df),
                   ),
                   outsideTextStyle: TextStyle(
-                    color: Color.fromARGB(196, 233, 230, 223),
+                    color: Color.fromARGB(113, 233, 230, 223),
                   ),
                   weekendTextStyle: TextStyle(
                     color: Color(0xFFe9e6df),
@@ -129,15 +134,12 @@ class CalendarState extends State<Calendar> {
                   ),
                 ),
                 onDaySelected: _onDaySelected,
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-                },
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               ),
             ),
           ),
         ),
         if (_selectedDay != null) DayInformation(selectedDay: _selectedDay),
-        if (_selectedDay == null) DayInformation(selectedDay: widget.today)
       ],
     );
   }
