@@ -19,11 +19,12 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
   List<UpperModel> workoutsUpper = [
     UpperModel("pushUps", "Chest", false),
     UpperModel("Vladimir", "Biceps", false),
-    UpperModel("I love", "XDD", false),
+    UpperModel("I love Jack", "XDD", false),
     UpperModel("Kryptiax", "Erection", false),
     UpperModel("Other xd :3", "All", false),
-    UpperModel("huh", "ye", false),
-    UpperModel("we :3", "lol", false),
+    UpperModel("I <3 dany", "Glutes", false),
+    UpperModel("jim the goat ", "ONG", false),
+    UpperModel("UpperWorkout 7", "Muscle Group", false),
   ];
 
   List<UpperModel> selectedWorkouts = [];
