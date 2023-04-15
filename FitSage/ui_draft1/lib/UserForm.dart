@@ -121,7 +121,7 @@ class _UserFormState extends State<UserForm> {
                         );
                       }
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   }),
 
@@ -200,7 +200,7 @@ class _UserFormState extends State<UserForm> {
                         );
                       }
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   }),
 
@@ -279,7 +279,7 @@ class _UserFormState extends State<UserForm> {
                         );
                       }
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   }),
 
@@ -359,7 +359,7 @@ class _UserFormState extends State<UserForm> {
                         );
                       }
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   }),
 
@@ -457,7 +457,7 @@ class _UserFormState extends State<UserForm> {
                         );
                       }
                     } else {
-                      return const CircularProgressIndicator();
+                      return const CircularProgressIndicator.adaptive();
                     }
                   }),
 
@@ -521,7 +521,7 @@ class _UserFormState extends State<UserForm> {
                         gender: gender,
                       );
                       String textForSnackBar;
-                      if (await DatabaseHelper.instance.hasData()) {
+                      if (await DatabaseHelper.instance.userHasData()) {
                         id = await DatabaseHelper.instance.updateUser(user);
                         textForSnackBar = 'User $id updated!';
                       } else {

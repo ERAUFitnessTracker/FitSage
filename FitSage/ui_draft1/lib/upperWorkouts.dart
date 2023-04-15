@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ui_draft1/squareForWorkouts.dart';
+import 'DatabaseHelper.dart';
+import 'event.dart';
 
 class UpperModel {
   String name, muscle;
@@ -58,11 +59,43 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
                   style: const TextStyle(
                       color: Color(0xFFe9e6df), fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
-                  //This will send the workouts to the calendar table
-                  for (int i = 0; i < selectedWorkouts.length; i++) {
-                    print(
-                        "${selectedWorkouts[i].name} ${selectedWorkouts[i].muscle}");
+                onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  if (selectedWorkouts.isNotEmpty) {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.utc(2023, 1, 1),
+                        lastDate: DateTime.utc(2030, 12, 31));
+                    for (int i = 0; i < selectedWorkouts.length; i++) {
+                      if (pickedDate != null) {
+                        Event workout = Event(
+                            workoutName: selectedWorkouts[i].name,
+                            workoutMuscle: selectedWorkouts[i].muscle,
+                            day: pickedDate.day,
+                            month: pickedDate.month,
+                            year: pickedDate.year);
+                        if (!(await DatabaseHelper.instance.doesEventExist(
+                            selectedWorkouts[i].name,
+                            selectedWorkouts[i].muscle,
+                            pickedDate.day,
+                            pickedDate.month,
+                            pickedDate.year))) {
+                          DatabaseHelper.instance.insertEvent(workout);
+                          print(await DatabaseHelper.queryAllEvents());
+                          messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Added ${selectedWorkouts[i].name} for ${pickedDate.month}/${pickedDate.day}/${pickedDate.year}"),
+                            ),
+                          );
+                        } else {
+                          messenger.showSnackBar(const SnackBar(
+                            content: Text("Event Already Exists"),
+                          ));
+                        }
+                      }
+                    }
                   }
                 },
               ),
