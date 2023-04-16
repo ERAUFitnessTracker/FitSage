@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'event.dart';
@@ -36,7 +38,7 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
       body: Column(
         children: [
           SizedBox(
-            height: 700,
+            height: 630,
             child: ListView.builder(
               itemCount: workoutsUpper.length,
               itemBuilder: (BuildContext context, int index) {
@@ -53,6 +55,7 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
             padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
             child: SizedBox(
               width: double.infinity,
+              height: 50.0,
               child: ElevatedButton(
                 child: Text(
                   "Do selected Workouts (${selectedWorkouts.length})",
@@ -102,7 +105,7 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: FloatingActionButton(

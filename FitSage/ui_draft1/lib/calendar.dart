@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 import 'DatabaseHelper.dart';
-import 'event.dart';
 
 class SelectedWorkouts {
   String name, muscle;
@@ -221,49 +219,3 @@ class CalendarState extends State<Calendar> {
     );
   }
 }
-
-// class DayInformation extends StatefulWidget {
-//   const DayInformation({
-//     super.key,
-//     required DateTime? selectedDay,
-//     required List<Map<String, dynamic>> events,
-//   })  : _selectedDay = selectedDay,
-//         _events = events;
-
-//   final DateTime? _selectedDay;
-//   final List<Map<String, dynamic>> _events;
-
-//   @override
-//   State<DayInformation> createState() => _DayInformationState();
-// }
-
-// class _DayInformationState extends State<DayInformation> {
-//   @override
-//   Widget build(BuildContext context) {
-    
-    
-//     return Padding(
-//       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-//       child: Material(
-//         elevation: 10,
-//         shadowColor: Colors.grey.withOpacity(0.5),
-//         borderRadius: BorderRadius.circular(4),
-//         child: SizedBox(
-//           width: 350,
-//           height: 80,
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Text(DateFormat('yMMMMEEEEd').format(widget._selectedDay!),
-//                   textAlign: TextAlign.center,
-//                   style: const TextStyle(fontWeight: FontWeight.bold)),
-//               Text(widget._events.toString(),
-//                   textAlign: TextAlign.center,
-//                   style: const TextStyle(fontWeight: FontWeight.bold)),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
