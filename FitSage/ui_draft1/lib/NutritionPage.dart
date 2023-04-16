@@ -55,12 +55,10 @@ class _NutritionPageState extends State<NutritionPage> {
     setState(() {
       for (TextBlock block in recognisedText.blocks) {
         //each block of text/section of text
-        // print("block of text: $text");
-
-        for (TextLine line in block.lines) {
-          //each line within a text block         for (TextElement element in line.elements) {
-          //each word within a line
-          result += "${line.text} ";
+        print("block of text: ${block.text}");
+        if (!(block.text.contains(RegExp(r'[A-Za-z%]+')))) {
+          //regex w common
+          result = block.text;
         }
       }
     });
@@ -96,12 +94,10 @@ class _NutritionPageState extends State<NutritionPage> {
             ],
           ),
           const SizedBox(height: 16),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Text(
-                result,
-                style: const TextStyle(fontSize: 16),
-              ),
+          SingleChildScrollView(
+            child: Text(
+              'Calories: $result',
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ],
