@@ -14,10 +14,12 @@ class NutritionPage extends StatefulWidget {
 class _NutritionPageState extends State<NutritionPage> {
   late String result = "";
 
+  bool imageRetakeNeeded = false;
   File? _image;
   InputImage? inputImage;
   final picker = ImagePicker();
 
+//open gallery and choose an image
   Future pickImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -32,6 +34,7 @@ class _NutritionPageState extends State<NutritionPage> {
     });
   }
 
+//open camera and take an image
   Future captureImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
@@ -46,61 +49,111 @@ class _NutritionPageState extends State<NutritionPage> {
     });
   }
 
+//scan the image for text
   Future imageToText(inputImage) async {
     result = '';
 
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     final recognisedText = await textRecognizer.processImage(inputImage);
+    textRecognizer.close();
 
     setState(() {
+      bool isNutritionFactsLabel = false;
       for (TextBlock block in recognisedText.blocks) {
-        //each block of text/section of text
-        print("block of text: ${block.text}");
-        if (!(block.text.contains(RegExp(r'[A-Za-z%]+')))) {
+        // print("block of text: ${block.text}");
+        //check if it's a nutrition facts label
+        if (block.text.contains('Nutrition') ||
+            block.text.contains('nutrition')) {
+          isNutritionFactsLabel = true;
+        }
+        //check if the block only contains numbers with no % sign or letters
+        if (!(block.text.contains(RegExp(r'[A-Za-z%]+'))) &&
+            isNutritionFactsLabel) {
           //regex w common
-          result = block.text;
+          result = "Calories: ${block.text}";
+          imageRetakeNeeded = false;
+          return;
         }
       }
+      if (!isNutritionFactsLabel) {
+        result = 'Please scan a Nutrition Facts label.';
+      } else {
+        result = 'Please take a clearer picture of the Nutrition Facts label.';
+      }
+      imageRetakeNeeded = true;
+      // _image = null;
     });
-    result += "\n\n";
-    textRecognizer.close();
+    result += "\n";
+  }
+
+//setup to display chooseImageButtons
+  Widget chooseImage() {
+    return Column(
+      children: [
+        const SizedBox(height: 75),
+        Center(
+            child: _image == null
+                ? const Text('No image selected.')
+                : Container()),
+        const SizedBox(height: 10),
+        chooseImageButtons(),
+      ],
+    );
+  }
+
+//displays "Gallery" and "Camera" buttons
+  Widget chooseImageButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ElevatedButton(
+          onPressed: pickImageFromGallery,
+          child: const Text('Gallery'),
+        ),
+        ElevatedButton(
+          onPressed: captureImageFromCamera,
+          child: const Text('Camera'),
+        ),
+      ],
+    );
+  }
+
+//displays the image and the scanned text
+  Widget displayResult() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 540,
+          child: Center(
+            child: Image.file(_image!),
+          ),
+        ),
+        const SizedBox(height: 20),
+        SingleChildScrollView(
+          child: Text(
+            result,
+            style: const TextStyle(fontSize: 24),
+          ),
+        ),
+        //displays chooseImageButtons if a retake is needed
+        !imageRetakeNeeded
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: chooseImageButtons(),
+              )
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [
-          const SizedBox(height: 100),
-          Expanded(
-            child: Center(
-              child: _image == null
-                  ? const Text('No image selected.')
-                  : Image.file(_image!),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: pickImageFromGallery,
-                child: const Text('Gallery'),
-              ),
-              ElevatedButton(
-                onPressed: captureImageFromCamera,
-                child: const Text('Camera'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          SingleChildScrollView(
-            child: Text(
-              'Calories: $result',
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        //if there's an image to scan, display it with the result
+        //otherwise, let the user pick an image
+        children: [_image == null ? chooseImage() : displayResult()],
       ),
     );
   }
