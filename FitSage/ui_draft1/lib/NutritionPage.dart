@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -91,10 +93,7 @@ class _NutritionPageState extends State<NutritionPage> {
     return Column(
       children: [
         const SizedBox(height: 75),
-        Center(
-            child: _image == null
-                ? const Text('No image selected.')
-                : Container()),
+        const Center(child: Text('No image selected.')),
         const SizedBox(height: 10),
         chooseImageButtons(),
       ],
@@ -118,6 +117,18 @@ class _NutritionPageState extends State<NutritionPage> {
     );
   }
 
+//displays save button (i wrote this on my phone hehe)
+  Widget saveCaloriesButton() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          print("Save button was pressed");
+        },
+        child: const Text('Save Calories'),
+      ),
+    );
+  }
+
 //displays the image and the scanned text
   Widget displayResult() {
     return Column(
@@ -137,7 +148,7 @@ class _NutritionPageState extends State<NutritionPage> {
         ),
         //displays chooseImageButtons if a retake is needed
         !imageRetakeNeeded
-            ? Container()
+            ? saveCaloriesButton()
             : Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: chooseImageButtons(),
