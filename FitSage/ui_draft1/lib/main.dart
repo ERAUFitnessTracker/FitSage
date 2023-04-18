@@ -146,23 +146,24 @@ class ProfileDataPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 0),
           //Column where all the elements will be
           child: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
             child: Column(
               children: <Widget>[
                 const UserDataPrint(),
                 // const UserForm(),
-                Expanded(
+                Padding(
+                    padding: const EdgeInsets.only(top: 20),
                     child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    tooltip: 'Back To Home',
-                    backgroundColor: const Color(0xFF99a98c),
-                    child: const Icon(Icons.close),
-                  ),
-                ))
+                      alignment: Alignment.bottomCenter,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        tooltip: 'Back To Home',
+                        backgroundColor: const Color(0xFF99a98c),
+                        child: const Icon(Icons.close),
+                      ),
+                    ))
               ],
             ),
           ),

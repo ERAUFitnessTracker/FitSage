@@ -37,7 +37,7 @@ class UserDataPrint extends StatelessWidget {
             BMIFromDatabase(),
             SizedBox(height: 10),
             BFPFromDatabase(),
-            SizedBox(height: 50),
+            SizedBox(height: 40),
             EditButton(),
           ],
         ),
