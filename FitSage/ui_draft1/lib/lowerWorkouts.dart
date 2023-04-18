@@ -18,11 +18,14 @@ class LowerWorkouts extends StatefulWidget {
 
 class _LowerWorkoutsState extends State<LowerWorkouts> {
   List<LowerModel> workoutsLower = [
-    LowerModel("pushUps", "Chest", false),
-    LowerModel("Vladimir", "Biceps", false),
-    LowerModel("I love Jack", "XDD", false),
-    LowerModel("Kryptiax", "Erection", false),
-    LowerModel("Other xd :3", "All", false),
+    LowerModel("Lower Workout 1", "All", false),
+    LowerModel("Lower Workout 2", "Calves", false),
+    LowerModel("Lower Workout 3", "Glutes", false),
+    LowerModel("Lower Workout 4", "Groin", false),
+    LowerModel("Lower Workout 5", "Hamstrings", false),
+    LowerModel("Lower Workout 6", "Hamstrings", false),
+    LowerModel("Lower Workout 7", "Quads", false),
+    LowerModel("Lower Workout 8", "Quads", false),
   ];
 
   List<LowerModel> selectedWorkouts = [];

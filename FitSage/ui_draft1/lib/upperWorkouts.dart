@@ -20,14 +20,14 @@ class UpperWorkouts extends StatefulWidget {
 
 class _UpperWorkoutsState extends State<UpperWorkouts> {
   List<UpperModel> workoutsUpper = [
-    UpperModel("pushUps", "Chest", false),
-    UpperModel("Vladimir", "Biceps", false),
-    UpperModel("I love Jack", "XDD", false),
-    UpperModel("Kryptiax", "Erection", false),
-    UpperModel("Other xd :3", "All", false),
-    UpperModel("I <3 dany", "Glutes", false),
-    UpperModel("jim the goat ", "ONG", false),
-    UpperModel("UpperWorkout 7", "Muscle Group", false),
+    UpperModel("Upper Workout 1", "All", false),
+    UpperModel("Upper Workout 2", "Biceps", false),
+    UpperModel("Upper Workout 3", "Back", false),
+    UpperModel("Upper Workout 4", "Chest", false),
+    UpperModel("Upper Workout 5", "Core", false),
+    UpperModel("Upper Workout 6", "Core", false),
+    UpperModel("Upper Workout 7", "Shoulders", false),
+    UpperModel("Upper Workout 8", "Shoulders", false),
   ];
 
   List<UpperModel> selectedWorkouts = [];
