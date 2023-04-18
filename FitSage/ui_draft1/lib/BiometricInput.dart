@@ -8,6 +8,7 @@ class BiometricInput {
   double weight;
   int age;
   String gender;
+  String goal;
 
   // CONSTRUCTORS
   BiometricInput({
@@ -16,6 +17,7 @@ class BiometricInput {
     required this.weight,
     required this.age,
     required this.gender,
+    this.goal = '',
   });
 
   // GETTERS
@@ -33,6 +35,10 @@ class BiometricInput {
 
   String getGender() {
     return gender;
+  }
+
+  String getGoal() {
+    return goal;
   }
 
   //BMI and BFP Compositions

@@ -51,14 +51,8 @@ public class Nutrition {
         }
     }
 
-    public void incrementAddCaloriesDaily(int x){
-
-        totalCalories = totalCalories + x;
-
-    }
-
     public void calorieCalculator(){
-
+        
         // calculates per input, add daily timer to reset totalCalories
         BiometricInput BI = new BiometricInput();
         if (goal.equals("Lose Weight")){

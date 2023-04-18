@@ -83,7 +83,7 @@ class _LowerWorkoutsState extends State<LowerWorkouts> {
                             pickedDate.month,
                             pickedDate.year))) {
                           DatabaseHelper.instance.insertEvent(workout);
-                          print(await DatabaseHelper.queryAllEvents());
+                          // print(await DatabaseHelper.queryAllEvents());
                           messenger.showSnackBar(
                             SnackBar(
                               content: Text(

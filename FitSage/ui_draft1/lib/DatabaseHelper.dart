@@ -217,14 +217,14 @@ class DatabaseHelper {
 
 // Updates event
   Future<int> updateEvent(Event event, int id) async {
-    final db = await database;
+    final db = await instance.database;
     return await db
         .update('events', event.toMap(), where: 'id = ?', whereArgs: [id]);
   }
 
 // Deletes event
   Future<int> deleteEvent(int id) async {
-    final db = await database;
+    final db = await instance.database;
     return await db.delete('events', where: 'id = ?', whereArgs: [id]);
   }
 
@@ -246,31 +246,31 @@ class DatabaseHelper {
   //adds calories for the day (ik this one is ugly sorry)
   Future<void> incrementCaloriesForDay(
       int day, int month, int year, int incrementAmount) async {
-    final db = await database;
-    final events = await db.query(
-      'events',
-      where: 'day = ? AND month = ? AND year = ?',
-      whereArgs: [day, month, year],
-    );
+    int oldCalories = getCaloriesForDay(day, month, year) as int;
+    int newCalories = oldCalories + incrementAmount;
+    setCaloriesForDay(day, month, year, newCalories);
+  }
 
-    int id = -1; //default value
-    for (final event in events) {
-      final results = await queryEventsforDay(day, month, year);
-
-      if (results.isNotEmpty) {
-        id = results.first['id']; //get id from the day
-      }
-
-      final updatedEvent = Event.fromMap(event);
-      // print(
-      //     'old calories: ${updatedEvent.totalCalories}, calories to be added: $incrementAmount');
-      updatedEvent.totalCalories +=
-          incrementAmount; //increment calories for the day
-      await updateEvent(updatedEvent,
-          id); //update the table to store the incremented calories
+  Future<int> getIDForDay(int day, int month, int year) async {
+    int id = 0;
+    final events = await queryEventsforDay(day, month, year);
+    if (events.isNotEmpty) {
+      id = events.first['id'];
     }
-    // If no events exist for this day, create a new one
-    if (events.isEmpty) {
+    return id;
+  }
+
+  Future<int> getCaloriesForDay(int day, int month, int year) async {
+    int totalCalories = 0;
+    final events = await queryEventsforDay(day, month, year);
+    //if there is data for the day, get the total calories
+    if (events.isNotEmpty) {
+      for (final event in events) {
+        totalCalories = Event.fromMap(event).totalCalories;
+      }
+    }
+    // If no events exist for this day, create a new one and return 0
+    else {
       final newEvent = Event(
           workoutName: '',
           workoutMuscle: '',
@@ -279,6 +279,17 @@ class DatabaseHelper {
           year: year,
           totalCalories: 0);
       await insertEvent(newEvent);
+      return totalCalories;
+    }
+    return 0; //error case where database both has and doesn't have data
+  }
+
+  Future<void> setCaloriesForDay(
+      int day, int month, int year, int newCalories) async {
+    final events = await queryEventsforDay(day, month, year);
+    int id = getIDForDay(day, month, year) as int;
+    for (final event in events) {
+      await updateEvent(Event.fromMap(event), id);
     }
   }
 

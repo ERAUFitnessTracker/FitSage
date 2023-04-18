@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'event.dart';
@@ -85,7 +83,7 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
                             pickedDate.month,
                             pickedDate.year))) {
                           DatabaseHelper.instance.insertEvent(workout);
-                          print(await DatabaseHelper.queryAllEvents());
+                          // print(await DatabaseHelper.queryAllEvents());
                           messenger.showSnackBar(
                             SnackBar(
                               content: Text(
