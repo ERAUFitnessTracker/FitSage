@@ -146,7 +146,7 @@ class ProfileDataPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 0),
           //Column where all the elements will be
           child: Padding(
-            padding: const EdgeInsets.all(40),
+            padding: const EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
                 const UserDataPrint(),

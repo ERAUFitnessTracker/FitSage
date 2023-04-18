@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable, library_private_types_in_public_api
 
+import 'dart:core';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,6 +27,12 @@ class _UserFormState extends State<UserForm> {
   List<String> genderSelection = [
     'Male',
     'Female',
+  ];
+  String? _goalController;
+  List<String> goalSelection = [
+    'Lose Weight',
+    'Gain Weight',
+    'Maintain Weight',
   ];
 
   @override
@@ -461,6 +469,103 @@ class _UserFormState extends State<UserForm> {
                     }
                   }),
 
+              const SizedBox(height: 10),
+              //////// Goal ////////
+              FutureBuilder<List<Map<String, dynamic>>>(
+                  future: DatabaseHelper.getUsers(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final users = snapshot.data!;
+                      if (users.isNotEmpty) {
+                        final user = users[0];
+                        String goal1 =
+                            (user['goal'])[0].toString().toUpperCase() +
+                                (user['goal']).toString().substring(1);
+                        return Material(
+                          elevation: 10,
+                          shadowColor: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(4),
+                          child: Container(
+                            height: 59,
+                            color: const Color(0xFFe9e6df),
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Goal',
+                                prefixIcon:
+                                    const Icon(LineAwesomeIcons.bullseye),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4)),
+                                fillColor: const Color(0xFFe9e6df),
+                                floatingLabelAlignment:
+                                    FloatingLabelAlignment.center,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                              dropdownColor: const Color(0xFFe9e6df),
+                              hint: Text(
+                                goal1,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 131, 129, 125)),
+                              ),
+                              items: goalSelection
+                                  .map((goal) => DropdownMenuItem<String>(
+                                        value: goal,
+                                        child: Text(goal),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _goalController = value as String;
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Material(
+                          elevation: 10,
+                          shadowColor: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(4),
+                          child: Container(
+                            height: 59,
+                            color: const Color(0xFFe9e6df),
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Goal',
+                                prefixIcon:
+                                    const Icon(LineAwesomeIcons.bullseye),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4)),
+                                fillColor: const Color(0xFFe9e6df),
+                                floatingLabelAlignment:
+                                    FloatingLabelAlignment.center,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                              dropdownColor: const Color(0xFFe9e6df),
+                              hint: const Text(
+                                'Goal',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 131, 129, 125)),
+                              ),
+                              items: goalSelection
+                                  .map((goal) => DropdownMenuItem<String>(
+                                        value: goal,
+                                        child: Text(goal),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _goalController = value as String;
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      return const CircularProgressIndicator.adaptive();
+                    }
+                  }),
+
               const SizedBox(height: 50),
 
               //////// Button ////////
@@ -476,6 +581,7 @@ class _UserFormState extends State<UserForm> {
                       double height;
                       int age;
                       String gender;
+                      String goal;
 
                       if (_nameController.text.isEmpty) {
                         name =
@@ -512,14 +618,21 @@ class _UserFormState extends State<UserForm> {
                         gender = _genderController.toString();
                       }
 
+                      if (_goalController == null) {
+                        goal =
+                            await DatabaseHelper.instance.getUserInfo('goal');
+                      } else {
+                        goal = _goalController.toString();
+                      }
+
                       User user = User(
-                        id: 0,
-                        name: name,
-                        weight: weight,
-                        height: height,
-                        age: age,
-                        gender: gender,
-                      );
+                          id: 0,
+                          name: name,
+                          weight: weight,
+                          height: height,
+                          age: age,
+                          gender: gender,
+                          goal: goal);
                       String textForSnackBar;
                       if (await DatabaseHelper.instance.userHasData()) {
                         id = await DatabaseHelper.instance.updateUser(user);

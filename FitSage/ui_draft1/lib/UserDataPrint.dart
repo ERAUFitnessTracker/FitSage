@@ -15,7 +15,7 @@ class UserDataPrint extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 370,
-      height: 600,
+      height: 662,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
         child: Column(
@@ -31,6 +31,8 @@ class UserDataPrint extends StatelessWidget {
             AgeFromDatabase(),
             SizedBox(height: 10),
             GenderFromDatabase(),
+            SizedBox(height: 10),
+            GoalFromDatabase(),
             SizedBox(height: 30),
             BMIFromDatabase(),
             SizedBox(height: 10),
@@ -376,6 +378,72 @@ class GenderFromDatabase extends StatelessWidget {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
                         hintText: 'Gender',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
+  }
+}
+
+class GoalFromDatabase extends StatelessWidget {
+  const GoalFromDatabase({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              String goal = (user['goal'])[0].toString().toUpperCase() +
+                  (user['goal']).toString().substring(1);
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.weight),
+                        labelText: 'goal',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: goal,
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.weight),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Goal',
                       ),
                       readOnly: true,
                     ),
