@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:async';
+import 'DatabaseHelper.dart';
 
 class NutritionPage extends StatefulWidget {
   const NutritionPage({super.key});
@@ -72,7 +73,7 @@ class _NutritionPageState extends State<NutritionPage> {
         if (!(block.text.contains(RegExp(r'[A-Za-z%]+'))) &&
             isNutritionFactsLabel) {
           //regex w common
-          result = "Calories: ${block.text}";
+          result = block.text;
           imageRetakeNeeded = false;
           return;
         }
@@ -86,6 +87,18 @@ class _NutritionPageState extends State<NutritionPage> {
       // _image = null;
     });
     result += "\n";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        //if there's an image to scan, display it with the result
+        //otherwise, let the user pick an image
+        children: [_image == null ? chooseImage() : displayResult()],
+      ),
+    );
   }
 
 //setup to display chooseImageButtons
@@ -117,20 +130,11 @@ class _NutritionPageState extends State<NutritionPage> {
     );
   }
 
-//displays save button (i wrote this on my phone hehe)
-  Widget saveCaloriesButton() {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          print("Save button was pressed");
-        },
-        child: const Text('Save Calories'),
-      ),
-    );
-  }
-
 //displays the image and the scanned text
   Widget displayResult() {
+    String outputText = '';
+    imageRetakeNeeded ? outputText = result : outputText = 'Calories: $result';
+
     return Column(
       children: [
         SizedBox(
@@ -142,30 +146,34 @@ class _NutritionPageState extends State<NutritionPage> {
         const SizedBox(height: 20),
         SingleChildScrollView(
           child: Text(
-            result,
+            outputText,
             style: const TextStyle(fontSize: 24),
           ),
         ),
         //displays chooseImageButtons if a retake is needed
-        !imageRetakeNeeded
-            ? saveCaloriesButton()
-            : Padding(
+        imageRetakeNeeded
+            ? Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: chooseImageButtons(),
               )
+            : saveCaloriesButton()
       ],
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        //if there's an image to scan, display it with the result
-        //otherwise, let the user pick an image
-        children: [_image == null ? chooseImage() : displayResult()],
+//displays save button (i wrote this on my phone hehe)
+  Widget saveCaloriesButton() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: addCaloriesToDatabase,
+        child: const Text('Save Calories'),
       ),
     );
+  }
+
+  void addCaloriesToDatabase() async {
+    DateTime today = DateTime.now();
+    await DatabaseHelper.instance.incrementCaloriesForDay(
+        today.day, today.month, today.year, int.parse(result));
   }
 }

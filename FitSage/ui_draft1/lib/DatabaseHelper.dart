@@ -18,7 +18,8 @@ class DatabaseHelper {
         weight REAL,
         height REAL,
         age INTEGER,
-        gender TEXT
+        gender TEXT,
+        goal TEXT
       )
     ''';
   final eventsTable = '''
@@ -28,8 +29,9 @@ class DatabaseHelper {
         workoutMuscle TEXT,
         day INTEGER,
         month INTEGER,
-        year INTEGER
-      )
+        year INTEGER,
+        totalCalories INTEGER
+      ) 
     ''';
 
   //// GET DATABASE ////
@@ -64,7 +66,7 @@ class DatabaseHelper {
     Database db = await instance.database;
 
     List<Map<String, dynamic>> maps = await db.query('users',
-        columns: ['id', 'name', 'weight', 'height', 'age', 'gender'],
+        columns: ['id', 'name', 'weight', 'height', 'age', 'gender', 'goal'],
         where: 'id = ?',
         whereArgs: [id]);
 
@@ -108,10 +110,19 @@ class DatabaseHelper {
     return Sqflite.firstIntValue(result)! > 0;
   }
 
-  Future<int> getLastID() async {
+  Future<int> getLastUserID() async {
     int id = 0;
     List? user = await readUser(id);
     while (user != null) {
+      id++;
+    }
+    return id;
+  }
+
+  Future<int> getLastEventID() async {
+    int id = 0;
+    List? event = await queryEvent(id);
+    while (event != null) {
       id++;
     }
     return id;
@@ -139,6 +150,8 @@ class DatabaseHelper {
         return user['age'].toString();
       case 'gender':
         return user['gender'].toString();
+      case 'goal':
+        return user['goal'].toString();
       default:
         return "";
     }
@@ -163,7 +176,15 @@ class DatabaseHelper {
     Database db = await instance.database;
 
     List<Map<String, dynamic>> maps = await db.query('events',
-        columns: ['id', 'workoutName', 'workoutMuscle', 'day', 'month', 'year'],
+        columns: [
+          'id',
+          'workoutName',
+          'workoutMuscle',
+          'day',
+          'month',
+          'year',
+          'totalCalories'
+        ],
         where: 'id = ?',
         whereArgs: [id]);
 
@@ -180,7 +201,15 @@ class DatabaseHelper {
 
     return await db.query(
       'events',
-      columns: ['id', 'workoutName', 'workoutMuscle', 'day', 'month', 'year'],
+      columns: [
+        'id',
+        'workoutName',
+        'workoutMuscle',
+        'day',
+        'month',
+        'year',
+        'totalCalories'
+      ],
       where: 'day = ? AND month = ? AND year = ?',
       whereArgs: [day, month, year],
     );
@@ -210,6 +239,47 @@ class DatabaseHelper {
       whereArgs: [workoutName, workoutMuscle, day, month, year],
     );
     return result.isNotEmpty;
+  }
+
+  //for nutrition calculator
+
+  //adds calories for the day (ik this one is ugly sorry)
+  Future<void> incrementCaloriesForDay(
+      int day, int month, int year, int incrementAmount) async {
+    final db = await database;
+    final events = await db.query(
+      'events',
+      where: 'day = ? AND month = ? AND year = ?',
+      whereArgs: [day, month, year],
+    );
+
+    int id = -1; //default value
+    for (final event in events) {
+      final results = await queryEventsforDay(day, month, year);
+
+      if (results.isNotEmpty) {
+        id = results.first['id']; //get id from the day
+      }
+
+      final updatedEvent = Event.fromMap(event);
+      // print(
+      //     'old calories: ${updatedEvent.totalCalories}, calories to be added: $incrementAmount');
+      updatedEvent.totalCalories +=
+          incrementAmount; //increment calories for the day
+      await updateEvent(updatedEvent,
+          id); //update the table to store the incremented calories
+    }
+    // If no events exist for this day, create a new one
+    if (events.isEmpty) {
+      final newEvent = Event(
+          workoutName: '',
+          workoutMuscle: '',
+          day: day,
+          month: month,
+          year: year,
+          totalCalories: 0);
+      await insertEvent(newEvent);
+    }
   }
 
 //////////////////////////
