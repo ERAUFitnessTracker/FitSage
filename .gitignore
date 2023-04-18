@@ -1,3 +1,10 @@
+# .vscode and .idea directories
+.vscode/
+.idea/
+
+# Intellij structure file
+*.iml
+
 # Compiled class file
 *.class
 
@@ -28,8 +35,14 @@ hs_err_pid*
 .dart_tool/
 .packages
 build/
+linux/
+web/
+windows/
+FitSage/ui_draft1/.flutter-plugins
+FitSage/ui_draft1/.flutter-plugins-dependencies
+
 # If you're building an application, you may want to check-in your pubspec.lock
-pubspec.lock
+# pubspec.lock
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
