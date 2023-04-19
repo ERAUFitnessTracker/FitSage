@@ -175,387 +175,388 @@ class UserDataPrint extends StatelessWidget {
           }
         });
   }
-}
 
-Widget HeightFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.ruler),
-                      labelText: 'Height (in)',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: user['height'].toString(),
+  Widget HeightFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.ruler),
+                        labelText: 'Height (in)',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: user['height'].toString(),
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.ruler),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Height (in)',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.ruler),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: 'Height (in)',
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
-}
+        });
+  }
 
-Widget AgeFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.running),
-                      labelText: 'Age',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: user['age'].toString(),
+  Widget AgeFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.running),
+                        labelText: 'Age',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: user['age'].toString(),
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.running),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Age',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.running),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: 'Age',
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
-}
+        });
+  }
 
-Widget GenderFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            String gender = (user['gender'])[0].toString().toUpperCase() +
-                (user['gender']).toString().substring(1);
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.venus_mars),
-                      labelText: 'Gender',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: gender,
+  Widget GenderFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              String gender = (user['gender'])[0].toString().toUpperCase() +
+                  (user['gender']).toString().substring(1);
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.venus_mars),
+                        labelText: 'Gender',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: gender,
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.venus_mars),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Gender',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.venus_mars),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: 'Gender',
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
-}
+        });
+  }
 
-Widget GoalFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            String goal = (user['goal'])[0].toString().toUpperCase() +
-                (user['goal']).toString().substring(1);
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.bullseye),
-                      labelText: 'Goal',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: goal,
+  Widget GoalFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              String goal = (user['goal'])[0].toString().toUpperCase() +
+                  (user['goal']).toString().substring(1);
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.bullseye),
+                        labelText: 'Goal',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: goal,
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.bullseye),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: 'Goal',
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.bullseye),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: 'Goal',
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
-}
+        });
+  }
 
 // ignore: must_be_immutable
-Widget BMIFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            double weight = user['weight'];
-            double height = user['height'];
-            double BMI = Calculators().calcBMI(weight, height);
-            String BMIType = BiometricInput(
-                    weight: user['weight'],
-                    height: user['height'],
-                    age: user['age'],
-                    gender: user['gender'])
-                .bmiType(BMI);
+  Widget BMIFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              double weight = user['weight'];
+              double height = user['height'];
+              double BMI = Calculators().calcBMI(weight, height);
+              String BMIType = BiometricInput(
+                      weight: user['weight'],
+                      height: user['height'],
+                      age: user['age'],
+                      gender: user['gender'])
+                  .bmiType(BMI);
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.bar_chart),
-                      labelText: 'Body Mass Index',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: "$BMIType: ${BMI.toStringAsPrecision(4)}",
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.bar_chart),
+                        labelText: 'Body Mass Index',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: "$BMIType: ${BMI.toStringAsPrecision(4)}",
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.bar_chart),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: "Body Mass Index",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.bar_chart),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: "Body Mass Index",
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
-}
+        });
+  }
 
-Widget BFPFromDatabase() {
-  return FutureBuilder<List<Map<String, dynamic>>>(
-      future: DatabaseHelper.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final users = snapshot.data!;
-          if (users.isNotEmpty) {
-            final user = users[0];
-            int age = user['age'];
-            String gender = (user['gender'])[0].toString().toUpperCase() +
-                (user['gender']).toString().substring(1);
-            double BMI = Calculators().calcBMI(user['weight'], user['height']);
-            double BFP = Calculators().calcBFP(gender, age, BMI);
-            String BFPType = BiometricInput(
-                    weight: user['weight'],
-                    height: user['height'],
-                    age: user['age'],
-                    gender: user['gender'])
-                .bfpType(BFP);
+  Widget BFPFromDatabase() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: DatabaseHelper.getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final users = snapshot.data!;
+            if (users.isNotEmpty) {
+              final user = users[0];
+              int age = user['age'];
+              String gender = (user['gender'])[0].toString().toUpperCase() +
+                  (user['gender']).toString().substring(1);
+              double BMI =
+                  Calculators().calcBMI(user['weight'], user['height']);
+              double BFP = Calculators().calcBFP(gender, age, BMI);
+              String BFPType = BiometricInput(
+                      weight: user['weight'],
+                      height: user['height'],
+                      age: user['age'],
+                      gender: user['gender'])
+                  .bfpType(BFP);
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(LineAwesomeIcons.percent),
-                      labelText: 'Body-Fat Percentage',
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: const OutlineInputBorder(),
-                      hintText: "$BFPType: ${BFP.toStringAsPrecision(3)}%",
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(LineAwesomeIcons.percent),
+                        labelText: 'Body-Fat Percentage',
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: const OutlineInputBorder(),
+                        hintText: "$BFPType: ${BFP.toStringAsPrecision(3)}%",
+                      ),
+                      readOnly: true,
                     ),
-                    readOnly: true,
                   ),
-                ),
-              ],
-            );
+                ],
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Material(
+                    elevation: 10,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                    color: const Color(0xFFe9e6df),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(LineAwesomeIcons.percent),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                        hintText: "Body-Fat Percentage",
+                      ),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              );
+            }
           } else {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Material(
-                  elevation: 10,
-                  shadowColor: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                  color: const Color(0xFFe9e6df),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(LineAwesomeIcons.percent),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
-                      hintText: "Body-Fat Percentage",
-                    ),
-                    readOnly: true,
-                  ),
-                ),
-              ],
-            );
+            return const CircularProgressIndicator();
           }
-        } else {
-          return const CircularProgressIndicator();
-        }
-      });
+        });
+  }
 }
 
 class EditButton extends StatelessWidget {
