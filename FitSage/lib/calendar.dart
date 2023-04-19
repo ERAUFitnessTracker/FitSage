@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'DatabaseHelper.dart';
 
@@ -105,6 +105,7 @@ class CalendarState extends State<Calendar> {
 
                 for (int i = 0; i < selectedWorkouts.length; i++) {
                   selectedWorkout.add(selectedWorkouts[i]);
+                  print('selected workout $i: $selectedWorkout');
                 }
 
                 return Padding(
@@ -116,58 +117,57 @@ class CalendarState extends State<Calendar> {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: TableCalendar(
-                        daysOfWeekHeight: 30,
-                        rowHeight: 40,
-                        locale: "en_US",
-                        headerStyle: HeaderStyle(
-                          formatButtonVisible: false,
-                          titleCentered: true,
-                          headerPadding: const EdgeInsets.all(1),
-                          titleTextStyle: const TextStyle(
-                            color: Color.fromARGB(255, 46, 51, 42),
-                            fontFamily: ".SF UI Display",
-                            fontSize: 20,
+                          daysOfWeekHeight: 30,
+                          rowHeight: 40,
+                          locale: "en_US",
+                          headerStyle: HeaderStyle(
+                            formatButtonVisible: false,
+                            titleCentered: true,
+                            headerPadding: const EdgeInsets.all(1),
+                            titleTextStyle: const TextStyle(
+                              color: Color.fromARGB(255, 46, 51, 42),
+                              fontFamily: ".SF UI Display",
+                              fontSize: 20,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFe9e6df),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFe9e6df),
-                            borderRadius: BorderRadius.circular(4),
+                          sixWeekMonthsEnforced: true,
+                          focusedDay: DateTime.now(),
+                          firstDay: DateTime.utc(2010, 1, 1),
+                          lastDay: DateTime.utc(2030, 12, 31),
+                          calendarStyle: const CalendarStyle(
+                            todayDecoration: BoxDecoration(
+                              color: Color.fromARGB(183, 233, 230, 223),
+                              shape: BoxShape.circle,
+                            ),
+                            selectedDecoration: BoxDecoration(
+                              color: Color(0xFFe9e6df),
+                              shape: BoxShape.circle,
+                            ),
+                            defaultTextStyle: TextStyle(
+                              color: Color(0xFFe9e6df),
+                            ),
+                            outsideTextStyle: TextStyle(
+                              color: Color.fromARGB(113, 233, 230, 223),
+                            ),
+                            weekendTextStyle: TextStyle(
+                              color: Color(0xFFe9e6df),
+                            ),
+                            todayTextStyle: TextStyle(
+                              color: Color(0xFF99a98c),
+                            ),
+                            selectedTextStyle: TextStyle(
+                              color: Color(0xFF99a98c),
+                            ),
                           ),
-                        ),
-                        sixWeekMonthsEnforced: true,
-                        focusedDay: DateTime.now(),
-                        firstDay: DateTime.utc(2010, 1, 1),
-                        lastDay: DateTime.utc(2030, 12, 31),
-                        calendarStyle: const CalendarStyle(
-                          todayDecoration: BoxDecoration(
-                            color: Color.fromARGB(183, 233, 230, 223),
-                            shape: BoxShape.circle,
-                          ),
-                          selectedDecoration: BoxDecoration(
-                            color: Color(0xFFe9e6df),
-                            shape: BoxShape.circle,
-                          ),
-                          defaultTextStyle: TextStyle(
-                            color: Color(0xFFe9e6df),
-                          ),
-                          outsideTextStyle: TextStyle(
-                            color: Color.fromARGB(113, 233, 230, 223),
-                          ),
-                          weekendTextStyle: TextStyle(
-                            color: Color(0xFFe9e6df),
-                          ),
-                          todayTextStyle: TextStyle(
-                            color: Color(0xFF99a98c),
-                          ),
-                          selectedTextStyle: TextStyle(
-                            color: Color(0xFF99a98c),
-                          ),
-                        ),
-                        onDaySelected: _onDaySelected,
-                        selectedDayPredicate: (day) =>
-                            isSameDay(_selectedDay, day),
-                        // ignore: no_leading_underscores_for_local_identifiers
-                        eventLoader: (day) => selectedWorkouts,
-                      ),
+                          onDaySelected: _onDaySelected,
+                          selectedDayPredicate: (day) =>
+                              isSameDay(_selectedDay, day),
+                          // ignore: no_leading_underscores_for_local_identifiers
+                          eventLoader: (day) => selectedWorkouts),
                     ),
                   ),
                 );
@@ -202,11 +202,28 @@ class CalendarState extends State<Calendar> {
                       child: SizedBox(
                         width: 350,
                         height: 100,
-                        child: ListView.builder(
-                          itemCount: selectedWorkout.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text(selectedWorkout[index]);
-                          },
+                        child: ScrollConfiguration(
+                          //makes the boundary color green
+                          behavior:
+                              const ScrollBehavior(), // From this behaviour you can change the behaviour
+                          child: GlowingOverscrollIndicator(
+                            axisDirection: AxisDirection.down,
+                            color: const Color(0xFF99a98c),
+                            child: ListView.builder(
+                              itemCount: selectedWorkout.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Text(selectedWorkout[index],
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.roboto(
+                                        textStyle: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.normal,
+                                      letterSpacing: 0.0,
+                                    )));
+                              },
+                            ),
+                          ),
                         ),
                       ),
                     ),

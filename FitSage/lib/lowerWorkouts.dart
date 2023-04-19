@@ -37,16 +37,25 @@ class _LowerWorkoutsState extends State<LowerWorkouts> {
         children: [
           SizedBox(
             height: 630,
-            child: ListView.builder(
-              itemCount: workoutsLower.length,
-              itemBuilder: (BuildContext context, int index) {
-                return LowerWorkoutItem(
-                  workoutsLower[index].name,
-                  workoutsLower[index].muscle,
-                  workoutsLower[index].isSelected,
-                  index,
-                );
-              },
+            child: ScrollConfiguration(
+              behavior:
+                  const ScrollBehavior(), // From this behaviour you can change the behaviour
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color:
+                    const Color(0xFF99a98c), // You can change your splash color
+                child: ListView.builder(
+                  itemCount: workoutsLower.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return LowerWorkoutItem(
+                      workoutsLower[index].name,
+                      workoutsLower[index].muscle,
+                      workoutsLower[index].isSelected,
+                      index,
+                    );
+                  },
+                ),
+              ),
             ),
           ),
           Padding(
