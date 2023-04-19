@@ -241,6 +241,17 @@ class DatabaseHelper {
     return result.isNotEmpty;
   }
 
+  Future<bool> doesNullEventExist(
+      String workoutName, String workoutMuscle) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'events',
+      where: 'workoutName = ? AND workoutMuscle = ?',
+      whereArgs: [workoutName, workoutMuscle],
+    );
+    return result.isNotEmpty;
+  }
+
   //for nutrition calculator
 
   //adds calories for the day (ik this one is ugly sorry)
@@ -295,10 +306,8 @@ class DatabaseHelper {
   Future<void> setCaloriesForDay(
       int day, int month, int year, int newCalories) async {
     final events = await queryEventsforDay(day, month, year);
-    int id = await getIDForDay(day, month, year);
     for (final event in events) {
       await updateCalories(Event.fromMap(event), day, month, year, newCalories);
-      print(Event.fromMap(event).totalCalories);
     }
   }
 

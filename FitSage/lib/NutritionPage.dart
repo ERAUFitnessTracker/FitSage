@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:async';
 import 'DatabaseHelper.dart';
+import 'calendar.dart';
 
 class NutritionPage extends StatefulWidget {
   const NutritionPage({super.key});
@@ -170,8 +171,7 @@ class _NutritionPageState extends State<NutritionPage> {
   }
 
   void addCaloriesToDatabase() async {
-    DateTime today = DateTime.now();
-    await DatabaseHelper.instance.incrementCaloriesForDay(
-        today.day, today.month, today.year, int.parse(result));
+    await DatabaseHelper.instance.incrementCaloriesForDay(DateTime.now().day,
+        DateTime.now().month, DateTime.now().year, int.parse(result));
   }
 }

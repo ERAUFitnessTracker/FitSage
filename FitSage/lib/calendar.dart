@@ -108,7 +108,6 @@ class CalendarState extends State<Calendar> {
 
                 for (int i = 0; i < selectedWorkouts.length; i++) {
                   selectedWorkout.add(selectedWorkouts[i]);
-                  print('selected workout $i: $selectedWorkout');
                 }
 
                 return Padding(
@@ -185,19 +184,17 @@ class CalendarState extends State<Calendar> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final selectedWorkouts = snapshot.data!;
-
-                  List<Event> selectedWorkout = [];
-
+                  List<Event> workoutsForDay = [];
                   for (int i = 1; i < selectedWorkouts.length; i++) {
                     var select = selectedWorkouts[i];
-                    Event workoutString = Event(
+                    Event workout = Event(
                         workoutName: select['workoutName'],
                         workoutMuscle: select['workoutMuscle'],
                         day: select['day'],
                         month: select['month'],
                         year: select['year'],
                         totalCalories: select['totalCalories']);
-                    selectedWorkout.add(workoutString);
+                    workoutsForDay.add(workout);
                   }
 
                   return Padding(
@@ -219,7 +216,8 @@ class CalendarState extends State<Calendar> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 0, 20, 0),
                                 child: ScrollConfiguration(
                                   behavior:
                                       const ScrollBehavior(), // From this behaviour you can change the behaviour
@@ -228,12 +226,28 @@ class CalendarState extends State<Calendar> {
                                     color: const Color(
                                         0xFF99a98c), // You can change your splash color
                                     child: ListView.builder(
-                                      itemCount: selectedWorkout.length,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 10),
+                                      itemCount: workoutsForDay.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return Text(
-                                          '${index + 1}:  ${selectedWorkout[index].workoutName}   ${selectedWorkout[index].workoutMuscle}',
-                                          textAlign: TextAlign.justify,
+                                        return SizedBox(
+                                          height: 40,
+                                          child: Card(
+                                            color: const Color(0xFF99a98c),
+                                            child: Center(
+                                              child: Text(
+                                                '${workoutsForDay[index].workoutName}   (${workoutsForDay[index].workoutMuscle})',
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         );
                                       },
                                     ),
@@ -241,14 +255,24 @@ class CalendarState extends State<Calendar> {
                                 ),
                               ),
                             ),
-                            if (selectedWorkout.isEmpty)
-                              const Text(
-                                'Calories for the day: 0',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            else
+                            if (workoutsForDay.isEmpty)
+                              if (_selectedDay!.day == DateTime.now().day &&
+                                  _selectedDay!.month == DateTime.now().month &&
+                                  _selectedDay!.year == DateTime.now().year &&
+                                  selectedWorkouts.isNotEmpty)
+                                Text(
+                                  'Calories for the day: ${selectedWorkouts[0]['totalCalories']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                )
+                              else
+                                const Text(
+                                  'Calories for the day: 0',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                            else if (workoutsForDay.isNotEmpty)
                               Text(
-                                'Calories for the day: ${selectedWorkout[0].totalCalories}',
+                                'Calories for the day: ${workoutsForDay[0].totalCalories}',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
