@@ -12,6 +12,7 @@ class WorkoutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var cardTextStyle = Theme.of(context).textTheme.displaySmall!.copyWith(
           color: const Color.fromRGBO(255, 255, 255, 1),
+          fontSize: 28,
         );
     return Scaffold(
       body: SizedBox(
@@ -32,7 +33,7 @@ class WorkoutPage extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'Upper Workouts',
+                    'Upper Body Workouts',
                     style: cardTextStyle,
                   )),
               BigCardButton(
@@ -45,7 +46,7 @@ class WorkoutPage extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Lower Workouts',
+                  'Lower Body Workouts',
                   style: cardTextStyle,
                 ),
               ),

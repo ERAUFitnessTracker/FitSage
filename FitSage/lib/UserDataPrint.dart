@@ -10,7 +10,6 @@ import 'calculators.dart';
 
 class UserDataPrint extends StatelessWidget {
   const UserDataPrint({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

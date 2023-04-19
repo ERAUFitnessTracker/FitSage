@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'DatabaseHelper.dart';
 import 'package:intl/intl.dart';
@@ -108,7 +107,7 @@ class CalendarState extends State<Calendar> {
 
                 for (int i = 0; i < selectedWorkouts.length; i++) {
                   selectedWorkout.add(selectedWorkouts[i]);
-                  print('selected workout $i: $selectedWorkout');
+                  // print('selected workout $i: $selectedWorkout');
                 }
 
                 return Padding(
@@ -219,7 +218,8 @@ class CalendarState extends State<Calendar> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 0, 20, 0),
                                 child: ScrollConfiguration(
                                   behavior:
                                       const ScrollBehavior(), // From this behaviour you can change the behaviour

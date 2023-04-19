@@ -16,6 +16,8 @@ class _NutritionPageState extends State<NutritionPage> {
   late String result = "";
 
   bool imageRetakeNeeded = false;
+  bool databaseUpdated = false;
+
   File? _image;
   InputImage? inputImage;
   final picker = ImagePicker();
@@ -94,7 +96,9 @@ class _NutritionPageState extends State<NutritionPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         //if there's an image to scan, display it with the result
         //otherwise, let the user pick an image
-        children: [_image == null ? chooseImage() : displayResult()],
+        children: [
+          _image == null || databaseUpdated ? chooseImage() : displayResult()
+        ],
       ),
     );
   }
@@ -104,8 +108,16 @@ class _NutritionPageState extends State<NutritionPage> {
     return Column(
       children: [
         const SizedBox(height: 75),
-        const Center(child: Text('No image selected.')),
-        const SizedBox(height: 10),
+        databaseUpdated
+            ? const Center(
+                child: Text('Calories added to database.',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w500)))
+            : const Center(
+                child: Text('No image selected.',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+        const SizedBox(height: 20),
         chooseImageButtons(),
       ],
     );
@@ -113,16 +125,18 @@ class _NutritionPageState extends State<NutritionPage> {
 
 //displays "Gallery" and "Camera" buttons
   Widget chooseImageButtons() {
+    databaseUpdated = false;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
-          onPressed: pickImageFromGallery,
-          child: const Text('Gallery'),
-        ),
-        ElevatedButton(
-          onPressed: captureImageFromCamera,
-          child: const Text('Camera'),
+        buttonTemplate(() {
+          pickImageFromGallery();
+        }, 'Gallery'),
+        buttonTemplate(
+          () {
+            captureImageFromCamera();
+          },
+          'Camera',
         ),
       ],
     );
@@ -154,17 +168,78 @@ class _NutritionPageState extends State<NutritionPage> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: chooseImageButtons(),
               )
-            : saveCaloriesButton()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buttonTemplate(() {
+                    addCaloriesToDatabase();
+                    // print('save calories button pressed');
+                    setState(() {
+                      databaseUpdated = true;
+                    });
+                    showSnackBar();
+                  }, 'Save Calories'),
+                  buttonTemplate(() {
+                    // print('choose another image pressed');
+                    setState(() {
+                      imageRetakeNeeded = true;
+                    });
+                  }, 'Choose Another Image'),
+                ],
+              ),
       ],
     );
   }
 
-//displays save button (i wrote this on my phone hehe)
-  Widget saveCaloriesButton() {
-    return Center(
-      child: ElevatedButton(
-        onPressed: addCaloriesToDatabase,
-        child: const Text('Save Calories'),
+  void showSnackBar() async {
+    final messenger = ScaffoldMessenger.of(context);
+    int id = 0;
+    String textForSnackBar;
+    if (await DatabaseHelper.instance.getCaloriesForDay(
+            DateTime.now().day, DateTime.now().month, DateTime.now().year) >=
+        0) {
+      id = await DatabaseHelper.instance.getIDForDay(
+          DateTime.now().day, DateTime.now().month, DateTime.now().year);
+      textForSnackBar = 'Event $id updated!';
+    } else {
+      // print("this shouldn't happen uh oh");
+      textForSnackBar = "this shouldn't happen";
+    }
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(textForSnackBar),
+      ),
+    );
+  }
+
+  Widget buttonTemplate(VoidCallback onPressed, String text) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 40.0),
+        child: Container(
+          width: 150,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: const Color.fromARGB(255, 153, 169, 140),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Center(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'roboto',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

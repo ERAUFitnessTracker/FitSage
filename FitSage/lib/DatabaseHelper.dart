@@ -295,10 +295,8 @@ class DatabaseHelper {
   Future<void> setCaloriesForDay(
       int day, int month, int year, int newCalories) async {
     final events = await queryEventsforDay(day, month, year);
-    int id = await getIDForDay(day, month, year);
     for (final event in events) {
       await updateCalories(Event.fromMap(event), day, month, year, newCalories);
-      print(Event.fromMap(event).totalCalories);
     }
   }
 
