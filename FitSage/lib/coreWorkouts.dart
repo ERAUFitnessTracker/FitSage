@@ -2,92 +2,88 @@ import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'event.dart';
 
-class UpperModel {
+class CoreModel {
   String name, muscle, description;
   double met;
   bool isSelected;
 
-  UpperModel(
+  CoreModel(
       this.name, this.muscle, this.met, this.isSelected, this.description);
 }
 
-class UpperWorkouts extends StatefulWidget {
-  const UpperWorkouts({super.key});
+class CoreWorkouts extends StatefulWidget {
+  const CoreWorkouts({super.key});
 
   @override
-  State<UpperWorkouts> createState() => _UpperWorkoutsState();
+  State<CoreWorkouts> createState() => _CoreWorkoutsState();
 }
 
-class _UpperWorkoutsState extends State<UpperWorkouts> {
-  List<UpperModel> workoutsUpper = [
-    UpperModel("Push Ups (moderate)", "Upper Body", 3.8, false, """
-Duration: 8-12 reps for 2-3 sets
-
-
-1. Start in a high plank position with your hands slightly wider than shoulder-width apart and your feet together.
-2. Keep your body straight, engage your core, and lower your body towards the ground by bending your arms.
-3. Pause for a moment when your chest is just above the ground.
-4. Push your body back up to the starting position by straightening your arms.
-5. Repeat for 8-12 reps, aiming for 2-3 sets."""),
-    UpperModel("Pull Ups (moderate)", "Upper Body", 3.8, false, """
-Duration: 5-10 reps for 2-3 sets
-
-1. Find a pull up bar and grip it with your palms facing away from you and your hands slightly wider than shoulder-width apart.
-2. Hang from the bar with your arms fully extended and your feet off the ground.
-3. Engage your core and pull yourself up towards the bar by bending your arms and squeezing your shoulder blades together.
-4. Pause when your chin is above the bar, then slowly lower yourself back down to the starting position.
-5. Repeat for 5-10 reps, aiming for 2-3 sets."""),
-    UpperModel("Dips (moderate)", "Upper Body", 3.8, false, """
-Duration: 5-10 reps for 2-3 sets
-
-1. Find a parallel bar or dip station and grip it with your palms facing down and your hands slightly wider than shoulder-width apart.
-2. Lift yourself up onto the bars and straighten your arms, keeping your feet off the ground.
-3. Engage your core and lower yourself down towards the bars by bending your arms.
-4. Pause when your upper arms are parallel to the ground, then push yourself back up to the starting position by straightening your arms.
-5. Repeat for 5-10 reps, aiming for 2-3 sets."""),
-    UpperModel("Wall Handstand (moderate)", "Upper Body", 3.8, false, """
-Duration: 10-20s for 2-3 sets
-
-1. Stand facing a wall and place your hands on the ground about shoulder-width apart.
-2. Kick your feet up and place them against the wall, with your toes pointing towards the ceiling.
-3. Slowly walk your hands back towards the wall until your body is in a straight line from your hands to your feet.
-4. Engage your core and hold this position for 10-20 seconds, or as long as you can maintain proper form.
-5. Lower your feet back down to the ground and rest for 10-20 seconds before repeating for 2-3 sets."""),
-    UpperModel("Push Ups (vigorous)", "Upper Body", 8, false, """
-Duration: 12-15 reps for 4-5 sets
+class _CoreWorkoutsState extends State<CoreWorkouts> {
+  List<CoreModel> workoutsCore = [
+    CoreModel("Plank (moderate)", "Core", 3.8, false, """
+Duration: 30-60 seconds for 2-3 sets
 
 1. Start in a high plank position with your hands slightly wider than shoulder-width apart and your feet together.
-2. Keep your body straight, engage your core, and lower your body towards the ground by bending your arms.
-3. Pause for a moment when your chest is just above the ground.
-4. Push your body back up to the starting position by straightening your arms.
-5. Repeat for 12-15 reps, aiming for 4-5 sets."""),
-    UpperModel("Pull Ups (vigorous)", "Upper Body", 8, false, """
-Duration: 8-12 reps for 4-5 sets
+2. Keep your body straight and engage your core, ensuring that your hips are in line with your shoulders.
+3. Hold this position for 30-60 seconds, aiming for 2-3 sets."""),
+    CoreModel("Crunches (moderate)", "Core", 3.8, false, """
+Duration: 10-15 reps for 2-3 sets
 
-1. Find a pull up bar and grip it with your palms facing away from you and your hands slightly wider than shoulder-width apart.
-2. Hang from the bar with your arms fully extended and your feet off the ground.
-3. Engage your core and pull yourself up towards the bar by bending your arms and squeezing your shoulder blades together.
-4. Pause when your chin is above the bar, then slowly lower yourself back down to the starting position.
-5. Repeat for 8-12 reps, aiming for 4-5 sets."""),
-    UpperModel("Dips (vigorous)", "Upper Body", 8, false, """
-Duration: 8-12 reps for 4-5 sets
+1. Lie on your back with your knees bent and your feet flat on the ground.
+2. Place your hands behind your head, and lift your shoulders off the ground towards your knees.
+3. Keep your neck and spine in a neutral position, and exhale as you lift your shoulders off the ground.
+4. Pause for a moment, and then lower your shoulders back to the ground.
+5. Aim for 10-15 reps, completing 2-3 sets."""),
+    CoreModel("Leg Raises (moderate)", "Core", 3.8, false, """
+Duration: 10-15 reps for 2-3 sets
 
-1. Find a parallel bar or dip station and grip it with your palms facing down and your hands slightly wider than shoulder-width apart.
-2. Lift yourself up onto the bars and straighten your arms, keeping your feet off the ground.
-3. Engage your core and lower yourself down towards the bars by bending your arms.
-4. Pause when your upper arms are parallel to the ground, then push yourself back up to the starting position by straightening your arms.
-5. Repeat for 8-12 reps, aiming for 4-5 sets."""),
-    UpperModel("Wall Handstand (vigorous)", "Upper Body", 8, false, """
-Duration: muscle failure (as long as you can) for 2-3 sets
+1. Lie on your back with your legs straight out in front of you.
+2. Place your hands by your sides or under your hips for extra support.
+3. Lift your legs off the ground until they are perpendicular to the floor.
+4. Lower your legs back down towards the ground without touching it.
+5. Aim for 10-15 reps, completing 2-3 sets.
+"""),
+    CoreModel("Sit Ups (moderate)", "Core", 3.8, false, """
+Duration: 10-15 reps for 2-3 sets
 
-1. Stand facing a wall and place your hands on the ground about shoulder-width apart.
-2. Kick your feet up and place them against the wall, with your toes pointing towards the ceiling.
-3. Slowly walk your hands back towards the wall until your body is in a straight line from your hands to your feet.
-4. Engage your core and hold this position until muscle failure (as long as you can).
-5. Lower your feet back down to the ground and rest for 30-60 seconds before repeating for 2-3 sets."""),
+1. Lie on your back with your knees bent and your feet flat on the ground.
+2. Place your hands behind your head or crossed on your chest.
+3. Engage your core and lift your upper body off the ground towards your knees.
+4. Pause for a moment, and then lower your upper body back to the ground.
+5. Aim for 10-15 reps, completing 2-3 sets."""),
+    CoreModel("Plank (vigorous)", "Core", 8, false, """
+Duration: 60-90 seconds for 3-4 sets
+
+1. Start in a high plank position with your hands slightly wider than shoulder-width apart and your feet together.
+2. Keep your body straight and engage your core, ensuring that your hips are in line with your shoulders.
+3. Hold this position for 60-90 seconds, aiming for 3-4 sets."""),
+    CoreModel("Crunches (vigorous)", "Core", 8, false, """
+Duration: 15-20 reps for 3-4 sets
+
+1. Lie on your back with your knees bent and your feet flat on the ground.
+2. Place your hands behind your head, and lift your shoulders off the ground towards your knees.
+3. Keep your neck and spine in a neutral position, and exhale as you lift your shoulders off the ground.
+4. Pause for a moment, and then lower your shoulders back to the ground.
+5. Aim for 15-20 reps, completing 3-4 sets."""),
+    CoreModel("Leg Raises (vigorous)", "Core", 8, false, """
+Duration: 15-20 reps for 3-4 sets
+
+1. Lie on your back with your legs straight out in front of you.
+2. Place your hands by your sides or under your hips for extra support.
+3. Lift your legs off the ground until they are perpendicular to the floor.
+4. Lower your legs back down towards the ground without touching it.
+5. Aim for 15-20 reps, completing 3-4 sets."""),
+    CoreModel("Sit Ups (vigorous)", "Core", 8, false, """
+Duration: 15-20 reps for 3-4 sets
+
+1. Lie on your back with your knees bent and your feet flat on the ground.
+2. Place your hands behind your head or crossed on your chest.
+3. Engage your core and lift your upper body off the ground towards your knees.
+4. Pause for a moment, and then lower your upper body back to the ground.
+5. Aim for 15-20 reps, completing 3-4 sets."""),
   ];
 
-  List<UpperModel> selectedWorkouts = [];
+  List<CoreModel> selectedWorkouts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -104,15 +100,15 @@ Duration: muscle failure (as long as you can) for 2-3 sets
                 color:
                     const Color(0xFF99a98c), // You can change your splash color
                 child: ListView.builder(
-                  padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
-                  itemCount: workoutsUpper.length,
+                  padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+                  itemCount: workoutsCore.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return UpperWorkoutItem(
-                      workoutsUpper[index].name,
-                      workoutsUpper[index].muscle,
-                      workoutsUpper[index].met,
-                      workoutsUpper[index].isSelected,
-                      workoutsUpper[index].description,
+                    return CoreWorkoutItem(
+                      workoutsCore[index].name,
+                      workoutsCore[index].muscle,
+                      workoutsCore[index].met,
+                      workoutsCore[index].isSelected,
+                      workoutsCore[index].description,
                       index,
                     );
                   },
@@ -245,7 +241,7 @@ Duration: muscle failure (as long as you can) for 2-3 sets
 
   //This widget enables the items to be created and clickable
   // ignore: non_constant_identifier_names
-  Widget UpperWorkoutItem(String name, String muscle, double met,
+  Widget CoreWorkoutItem(String name, String muscle, double met,
       bool isSelected, String description, int index) {
     return Card(
       color: const Color(0xFF99a98c),
@@ -274,14 +270,13 @@ Duration: muscle failure (as long as you can) for 2-3 sets
                   color: Color.fromARGB(132, 233, 230, 223)),
           onTap: () {
             setState(() {
-              workoutsUpper[index].isSelected =
-                  !workoutsUpper[index].isSelected;
-              if (workoutsUpper[index].isSelected) {
-                selectedWorkouts.add(
-                    UpperModel(name, muscle, met, isSelected, description));
-              } else if (!(workoutsUpper[index].isSelected)) {
+              workoutsCore[index].isSelected = !workoutsCore[index].isSelected;
+              if (workoutsCore[index].isSelected) {
+                selectedWorkouts
+                    .add(CoreModel(name, muscle, met, isSelected, description));
+              } else if (!(workoutsCore[index].isSelected)) {
                 selectedWorkouts.removeWhere(
-                    (element) => element.name == workoutsUpper[index].name);
+                    (element) => element.name == workoutsCore[index].name);
               }
             });
           },

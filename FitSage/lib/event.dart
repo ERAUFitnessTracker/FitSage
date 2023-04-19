@@ -1,6 +1,7 @@
 class Event {
   String workoutName;
   String workoutMuscle;
+  double met;
   int day;
   int month;
   int year;
@@ -9,6 +10,7 @@ class Event {
   Event(
       {required this.workoutName,
       required this.workoutMuscle,
+      required this.met,
       required this.day,
       required this.month,
       required this.year,
@@ -18,6 +20,7 @@ class Event {
     return {
       'workoutName': workoutName,
       'workoutMuscle': workoutMuscle,
+      'met': met,
       'day': day,
       'month': month,
       'year': year,
@@ -29,6 +32,7 @@ class Event {
     return Event(
       workoutName: map['workoutName'],
       workoutMuscle: map['workoutMuscle'],
+      met: map['met'],
       day: map['day'],
       month: map['month'],
       year: map['year'],

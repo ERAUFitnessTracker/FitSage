@@ -1,6 +1,10 @@
+import 'package:FitSage/DatabaseHelper.dart';
+import 'package:FitSage/coreWorkouts.dart';
 import 'package:flutter/material.dart';
 import 'upperWorkouts.dart';
 import 'lowerWorkouts.dart';
+import 'package:duration_picker/duration_picker.dart';
+import 'calculators.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -50,8 +54,126 @@ class WorkoutPage extends StatelessWidget {
                   style: cardTextStyle,
                 ),
               ),
-              // Upper(), --- I changed the buttons to each use the same Widget. this way we only need one class
-              // Lower(),
+              BigCardButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CoreWorkouts(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Core Workouts',
+                    style: cardTextStyle,
+                  )),
+              BigCardButton(
+                  onPressed: () async {
+                    List<Map<String, dynamic>> allWorkouts =
+                        await DatabaseHelper.instance.queryEventsforDay(
+                            DateTime.now().day,
+                            DateTime.now().month,
+                            DateTime.now().year);
+                    double userWeight = double.parse(
+                        await DatabaseHelper.instance.getUserInfo('weight'));
+                    List<int> allDurations = [];
+                    List<double> allMET = [];
+
+                    for (int i = 1; i < allWorkouts.length; i++) {
+                      // ignore: use_build_context_synchronously
+                      Duration? time = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              '\n\n\nHow long did you take doing ${allWorkouts[i]['workoutName']}?',
+                              style: const TextStyle(
+                                  backgroundColor: Color(0xFF99a98c),
+                                  color: Color(0xFFe9e6df),
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                            titleTextStyle: cardTextStyle,
+                            insetPadding: EdgeInsets.all(0),
+                            backgroundColor: Colors.transparent,
+                            content: SizedBox(
+                              height: double
+                                  .maxFinite, // Provide a specific height for the content
+                              width: double
+                                  .maxFinite, // Provide a specific width for the content
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  DurationPickerDialog(
+                                    initialTime: Duration.zero,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFe9e6df),
+                                      boxShadow: const [BoxShadow()],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+
+                      if (time != null) {
+                        allDurations.add(time.inMinutes);
+                        double met = allWorkouts[i]['met'];
+                        allMET.add(met);
+                      }
+                    }
+                    for (int i = 0; i < allWorkouts.length - 1; i++) {
+                      Calculators().caloriesBurned(userWeight,
+                          allDurations.elementAt(i), allMET.elementAt(i));
+                    }
+
+                    // for (int i = 1; i < allWorkouts.length; i++) {
+                    //   // ignore: use_build_context_synchronously
+                    //   showDialog(
+                    //       context: context,
+                    //       builder: (BuildContext context) => Column(children: [
+
+                    //             Padding(
+                    //               padding: const EdgeInsets.fromLTRB(
+                    //                   20, 100, 20, 10),
+                    //               child: Center(
+                    //                   child: Container(
+                    //                 height: 20,
+                    //                 width: 300,
+                    //                 decoration: const BoxDecoration(
+                    //                     color: Colors.white),
+                    //                 child: SizedBox(
+                    //                   child: Center(
+                    //                     child: Text(
+                    //                       'Workout $i ${allWorkouts[i]['workoutName']}',
+                    //                       textAlign: TextAlign.center,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               )),
+                    //             ),
+                    //             DurationPickerDialog(
+                    //                 initialTime: Duration.zero,
+                    //                 decoration: BoxDecoration(
+                    //                     color: const Color(0xFFe9e6df),
+                    //                     boxShadow: const [
+                    //                       BoxShadow(
+                    //                         spreadRadius: -200,
+                    //                       )
+                    //                     ],
+                    //                     borderRadius:
+                    //                         BorderRadius.circular(10))),
+                    //           ]),
+                    //       barrierColor: Colors.transparent);
+                    // }
+                  },
+                  child: Text(
+                    'Calculate Calories Burned',
+                    style: cardTextStyle,
+                  )),
             ],
           ),
         ),

@@ -189,6 +189,7 @@ class CalendarState extends State<Calendar> {
                     Event workout = Event(
                         workoutName: select['workoutName'],
                         workoutMuscle: select['workoutMuscle'],
+                        met: select['met'],
                         day: select['day'],
                         month: select['month'],
                         year: select['year'],

@@ -131,4 +131,16 @@ class Calculators {
         goal: $goal""";
     }
   }
+
+  double caloriesBurned(double weight, int workoutTime, double met) {
+    double calBurned = 0;
+    print(weight);
+    print(workoutTime);
+    print(met);
+    return 0;
+  }
+
+  // double weightLost(double calBurned) {
+
+  // }
 }
