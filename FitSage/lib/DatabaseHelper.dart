@@ -241,6 +241,17 @@ class DatabaseHelper {
     return result.isNotEmpty;
   }
 
+  Future<bool> doesNullEventExist(
+      String workoutName, String workoutMuscle) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'events',
+      where: 'workoutName = ? AND workoutMuscle = ?',
+      whereArgs: [workoutName, workoutMuscle],
+    );
+    return result.isNotEmpty;
+  }
+
   //for nutrition calculator
 
   //adds calories for the day (ik this one is ugly sorry)

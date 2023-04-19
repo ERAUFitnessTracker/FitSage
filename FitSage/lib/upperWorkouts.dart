@@ -71,6 +71,7 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
                 ),
                 onPressed: () async {
                   final messenger = ScaffoldMessenger.of(context);
+                  Event workout;
                   if (selectedWorkouts.isNotEmpty) {
                     DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -79,13 +80,26 @@ class _UpperWorkoutsState extends State<UpperWorkouts> {
                         lastDate: DateTime.utc(2030, 12, 31));
                     for (int i = 0; i < selectedWorkouts.length; i++) {
                       if (pickedDate != null) {
-                        Event workout = Event(
-                            workoutName: selectedWorkouts[i].name,
-                            workoutMuscle: selectedWorkouts[i].muscle,
-                            day: pickedDate.day,
-                            month: pickedDate.month,
-                            year: pickedDate.year,
-                            totalCalories: 0);
+                        if (await DatabaseHelper.instance
+                            .doesNullEventExist('', '')) {
+                          workout = Event(
+                              workoutName: selectedWorkouts[i].name,
+                              workoutMuscle: selectedWorkouts[i].muscle,
+                              day: pickedDate.day,
+                              month: pickedDate.month,
+                              year: pickedDate.year,
+                              totalCalories: await DatabaseHelper.instance
+                                  .getCaloriesForDay(pickedDate.day,
+                                      pickedDate.month, pickedDate.year));
+                        } else {
+                          workout = Event(
+                              workoutName: selectedWorkouts[i].name,
+                              workoutMuscle: selectedWorkouts[i].muscle,
+                              day: pickedDate.day,
+                              month: pickedDate.month,
+                              year: pickedDate.year,
+                              totalCalories: 0);
+                        }
                         if (!(await DatabaseHelper.instance.doesEventExist(
                             selectedWorkouts[i].name,
                             selectedWorkouts[i].muscle,

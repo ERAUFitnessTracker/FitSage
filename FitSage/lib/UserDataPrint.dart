@@ -349,7 +349,7 @@ class GenderFromDatabase extends StatelessWidget {
                     color: const Color(0xFFe9e6df),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(LineAwesomeIcons.weight),
+                        prefixIcon: const Icon(LineAwesomeIcons.venus_mars),
                         labelText: 'Gender',
                         floatingLabelAlignment: FloatingLabelAlignment.center,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -372,7 +372,7 @@ class GenderFromDatabase extends StatelessWidget {
                     color: const Color(0xFFe9e6df),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        prefixIcon: Icon(LineAwesomeIcons.weight),
+                        prefixIcon: Icon(LineAwesomeIcons.venus_mars),
                         floatingLabelAlignment: FloatingLabelAlignment.center,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
