@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'DatabaseHelper.dart';
+import 'package:intl/intl.dart';
+
+import 'event.dart';
 
 class SelectedWorkouts {
   String name, muscle;
@@ -166,7 +169,6 @@ class CalendarState extends State<Calendar> {
                         selectedDayPredicate: (day) =>
                             isSameDay(_selectedDay, day),
                         // ignore: no_leading_underscores_for_local_identifiers
-                        eventLoader: (day) => selectedWorkouts,
                       ),
                     ),
                   ),
@@ -183,13 +185,17 @@ class CalendarState extends State<Calendar> {
                 if (snapshot.hasData) {
                   final selectedWorkouts = snapshot.data!;
 
-                  List<String> selectedWorkout = [];
+                  List<Event> selectedWorkout = [];
 
-                  for (int i = 0; i < selectedWorkouts.length; i++) {
+                  for (int i = 1; i < selectedWorkouts.length; i++) {
                     var select = selectedWorkouts[i];
-                    String workoutString =
-                        '${select['workoutName']}  ${select['workoutMuscle']}';
-
+                    Event workoutString = Event(
+                        workoutName: select['workoutName'],
+                        workoutMuscle: select['workoutMuscle'],
+                        day: select['day'],
+                        month: select['month'],
+                        year: select['year'],
+                        totalCalories: select['totalCalories']);
                     selectedWorkout.add(workoutString);
                   }
 
@@ -201,12 +207,43 @@ class CalendarState extends State<Calendar> {
                       borderRadius: BorderRadius.circular(4),
                       child: SizedBox(
                         width: 350,
-                        height: 100,
-                        child: ListView.builder(
-                          itemCount: selectedWorkout.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text(selectedWorkout[index]);
-                          },
+                        height: 150,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              DateFormat('yMMMMEEEEd').format(_selectedDay!),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
+                                child: ListView.builder(
+                                  itemCount: selectedWorkout.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Text(
+                                      '${index + 1}:  ${selectedWorkout[index].workoutName}   ${selectedWorkout[index].workoutMuscle}',
+                                      textAlign: TextAlign.justify,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            if (selectedWorkout.isEmpty)
+                              const Text(
+                                'Calories for the day: 0',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            else
+                              Text(
+                                'Calories for the day: ${selectedWorkout[0].totalCalories}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            const SizedBox(height: 10),
+                          ],
                         ),
                       ),
                     ),
