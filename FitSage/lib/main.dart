@@ -1,3 +1,4 @@
+import 'package:FitSage/DatabaseHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:FitSage/NutritionPage.dart';
 import 'package:FitSage/UserDataPrint.dart';
@@ -5,6 +6,7 @@ import 'UserForm.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'calendar.dart';
 import 'workout.dart';
+import 'GoalTracker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const NutritionPage(),
     const HomePage(),
     const WorkoutPage(),
+    const ProfileFormPage()
   ];
 
   void _onItemTapped(int index) {
@@ -98,6 +101,7 @@ class HomePage extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         const CalendarPage(),
+        const GoalTracker(),
         Positioned(
           top: 40.0,
           right: 20.0,

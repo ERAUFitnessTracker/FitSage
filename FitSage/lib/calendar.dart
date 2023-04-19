@@ -29,7 +29,7 @@ class _CalendarPageState extends State<CalendarPage> {
       backgroundColor: const Color(0xFFe9e6df),
       body: SizedBox(
         child: Padding(
-          padding: const EdgeInsets.only(top: 130.0),
+          padding: const EdgeInsets.only(top: 100.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

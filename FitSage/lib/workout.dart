@@ -125,9 +125,11 @@ class WorkoutPage extends StatelessWidget {
                         allMET.add(met);
                       }
                     }
+                    double caloriesBurned = 0;
                     for (int i = 0; i < allWorkouts.length - 1; i++) {
-                      Calculators().caloriesBurned(userWeight,
+                      caloriesBurned += Calculators().caloriesBurned(userWeight,
                           allDurations.elementAt(i), allMET.elementAt(i));
+                      print("total: $caloriesBurned");
                     }
 
                     // for (int i = 1; i < allWorkouts.length; i++) {
