@@ -38,8 +38,8 @@ build/
 linux/
 web/
 windows/
-FitSage/ui_draft1/.flutter-plugins
-FitSage/ui_draft1/.flutter-plugins-dependencies
+FitSage/FitSage/.flutter-plugins
+FitSage/FitSage/.flutter-plugins-dependencies
 
 # If you're building an application, you may want to check-in your pubspec.lock
 # pubspec.lock
