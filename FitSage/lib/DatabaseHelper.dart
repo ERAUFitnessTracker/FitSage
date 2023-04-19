@@ -251,6 +251,14 @@ class DatabaseHelper {
     await setCaloriesForDay(day, month, year, newCalories);
   }
 
+  Future<int> updateCalories(
+      Event event, int day, int month, int year, int newCalories) async {
+    final db = await instance.database;
+    return await db.update('events', {'totalCalories': newCalories},
+        where: 'day = ? AND month = ? AND year = ?',
+        whereArgs: [day, month, year]);
+  }
+
   Future<int> getIDForDay(int day, int month, int year) async {
     int id = 0;
     final events = await queryEventsforDay(day, month, year);
@@ -268,6 +276,7 @@ class DatabaseHelper {
       for (final event in events) {
         totalCalories = Event.fromMap(event).totalCalories;
       }
+      return totalCalories;
     }
     // If no events exist for this day, create a new one and return 0
     else {
@@ -281,7 +290,6 @@ class DatabaseHelper {
       await insertEvent(newEvent);
       return totalCalories;
     }
-    return 0; //error case where database both has and doesn't have data
   }
 
   Future<void> setCaloriesForDay(
@@ -289,7 +297,8 @@ class DatabaseHelper {
     final events = await queryEventsforDay(day, month, year);
     int id = await getIDForDay(day, month, year);
     for (final event in events) {
-      await updateEvent(Event.fromMap(event), id);
+      await updateCalories(Event.fromMap(event), day, month, year, newCalories);
+      print(Event.fromMap(event).totalCalories);
     }
   }
 

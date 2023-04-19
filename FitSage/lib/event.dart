@@ -12,7 +12,7 @@ class Event {
       required this.day,
       required this.month,
       required this.year,
-      this.totalCalories = 0});
+      required this.totalCalories});
 
   Map<String, dynamic> toMap() {
     return {
