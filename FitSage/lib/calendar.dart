@@ -7,12 +7,6 @@ import 'package:intl/intl.dart';
 
 import 'event.dart';
 
-class SelectedWorkouts {
-  String name, muscle;
-
-  SelectedWorkouts(this.name, this.muscle);
-}
-
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
 
