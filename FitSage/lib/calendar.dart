@@ -220,15 +220,24 @@ class CalendarState extends State<Calendar> {
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
-                                child: ListView.builder(
-                                  itemCount: selectedWorkout.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Text(
-                                      '${index + 1}:  ${selectedWorkout[index].workoutName}   ${selectedWorkout[index].workoutMuscle}',
-                                      textAlign: TextAlign.justify,
-                                    );
-                                  },
+                                child: ScrollConfiguration(
+                                  behavior:
+                                      const ScrollBehavior(), // From this behaviour you can change the behaviour
+                                  child: GlowingOverscrollIndicator(
+                                    axisDirection: AxisDirection.down,
+                                    color: const Color(
+                                        0xFF99a98c), // You can change your splash color
+                                    child: ListView.builder(
+                                      itemCount: selectedWorkout.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Text(
+                                          '${index + 1}:  ${selectedWorkout[index].workoutName}   ${selectedWorkout[index].workoutMuscle}',
+                                          textAlign: TextAlign.justify,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
