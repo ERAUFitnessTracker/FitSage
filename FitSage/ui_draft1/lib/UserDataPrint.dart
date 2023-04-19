@@ -416,8 +416,8 @@ class GoalFromDatabase extends StatelessWidget {
                     color: const Color(0xFFe9e6df),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(LineAwesomeIcons.weight),
-                        labelText: 'goal',
+                        prefixIcon: const Icon(LineAwesomeIcons.bullseye),
+                        labelText: 'Goal',
                         floatingLabelAlignment: FloatingLabelAlignment.center,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: const OutlineInputBorder(),
@@ -439,7 +439,7 @@ class GoalFromDatabase extends StatelessWidget {
                     color: const Color(0xFFe9e6df),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        prefixIcon: Icon(LineAwesomeIcons.weight),
+                        prefixIcon: Icon(LineAwesomeIcons.bullseye),
                         floatingLabelAlignment: FloatingLabelAlignment.center,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),

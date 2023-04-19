@@ -75,7 +75,8 @@ class _LowerWorkoutsState extends State<LowerWorkouts> {
                             workoutMuscle: selectedWorkouts[i].muscle,
                             day: pickedDate.day,
                             month: pickedDate.month,
-                            year: pickedDate.year);
+                            year: pickedDate.year,
+                            totalCalories: 0);
                         if (!(await DatabaseHelper.instance.doesEventExist(
                             selectedWorkouts[i].name,
                             selectedWorkouts[i].muscle,
