@@ -1,12 +1,21 @@
 import 'package:FitSage/DatabaseHelper.dart';
 import 'package:FitSage/coreWorkouts.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'upperWorkouts.dart';
 import 'lowerWorkouts.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'calculators.dart';
+import 'event.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
+class WorkoutModel {
+  String name, description;
+  double met;
+  bool isSelected;
+
+  WorkoutModel(this.name, this.met, this.isSelected, this.description);
+}
 
 class WorkoutPage extends StatelessWidget {
   const WorkoutPage({super.key});
@@ -76,101 +85,73 @@ class WorkoutPage extends StatelessWidget {
                             DateTime.now().year);
                     double userWeight = double.parse(
                         await DatabaseHelper.instance.getUserInfo('weight'));
-                    List<int> allDurations = [];
-                    List<double> allMET = [];
+                    int duration = 0;
+                    double met = 0;
 
-                    for (int i = 1; i < allWorkouts.length; i++) {
-                      // ignore: use_build_context_synchronously
-                      Duration? time = await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              '\n\n\nHow long did you take doing ${allWorkouts[i]['workoutName']}?',
-                              style: const TextStyle(
-                                  backgroundColor: Color(0xFF99a98c),
-                                  color: Color(0xFFe9e6df),
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                            titleTextStyle: cardTextStyle,
-                            insetPadding: EdgeInsets.all(0),
-                            backgroundColor: Colors.transparent,
-                            content: SizedBox(
-                              height: double
-                                  .maxFinite, // Provide a specific height for the content
-                              width: double
-                                  .maxFinite, // Provide a specific width for the content
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  DurationPickerDialog(
-                                    initialTime: Duration.zero,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFe9e6df),
-                                      boxShadow: const [BoxShadow()],
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                ],
+                    for (int i = 0; i < allWorkouts.length; i++) {
+                      if (allWorkouts[i]['caloriesBurned'] == 0) {
+                        // ignore: use_build_context_synchronously
+                        Duration? time = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                '\n\n\nHow long did you take doing ${allWorkouts[i]['workoutName']}?',
+                                style: const TextStyle(
+                                    backgroundColor: Color(0xFF99a98c),
+                                    color: Color(0xFFe9e6df),
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          );
-                        },
-                      );
+                              titleTextStyle: cardTextStyle,
+                              insetPadding: const EdgeInsets.all(0),
+                              backgroundColor: Colors.transparent,
+                              content: SizedBox(
+                                height: double
+                                    .maxFinite, // Provide a specific height for the content
+                                width: double
+                                    .maxFinite, // Provide a specific width for the content
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    DurationPickerDialog(
+                                      initialTime: Duration.zero,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFe9e6df),
+                                        boxShadow: const [BoxShadow()],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
 
-                      if (time != null) {
-                        allDurations.add(time.inMinutes);
-                        double met = allWorkouts[i]['met'];
-                        allMET.add(met);
+                        // ignore: unrelated_type_equality_checks
+                        if (time != null && time != 0) {
+                          duration = time.inMinutes;
+                          met = allWorkouts[i]['met'];
+
+                          double caloriesBurned = 0;
+                          double totalCaloriesBurned = 0;
+                          caloriesBurned = Calculators()
+                              .caloriesBurned(userWeight, duration, met);
+
+                          await DatabaseHelper.instance
+                              .setCaloriesBurnedForWorkout(
+                                  allWorkouts[i]['workoutName'],
+                                  allWorkouts[i]['workoutMuscle'],
+                                  allWorkouts[i]['day'],
+                                  allWorkouts[i]['month'],
+                                  allWorkouts[i]['year'],
+                                  caloriesBurned);
+                          totalCaloriesBurned += caloriesBurned;
+                          print("total: $totalCaloriesBurned");
+                        }
                       }
                     }
-                    double caloriesBurned = 0;
-                    for (int i = 0; i < allWorkouts.length - 1; i++) {
-                      caloriesBurned += Calculators().caloriesBurned(userWeight,
-                          allDurations.elementAt(i), allMET.elementAt(i));
-                      print("total: $caloriesBurned");
-                    }
-
-                    // for (int i = 1; i < allWorkouts.length; i++) {
-                    //   // ignore: use_build_context_synchronously
-                    //   showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) => Column(children: [
-
-                    //             Padding(
-                    //               padding: const EdgeInsets.fromLTRB(
-                    //                   20, 100, 20, 10),
-                    //               child: Center(
-                    //                   child: Container(
-                    //                 height: 20,
-                    //                 width: 300,
-                    //                 decoration: const BoxDecoration(
-                    //                     color: Colors.white),
-                    //                 child: SizedBox(
-                    //                   child: Center(
-                    //                     child: Text(
-                    //                       'Workout $i ${allWorkouts[i]['workoutName']}',
-                    //                       textAlign: TextAlign.center,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               )),
-                    //             ),
-                    //             DurationPickerDialog(
-                    //                 initialTime: Duration.zero,
-                    //                 decoration: BoxDecoration(
-                    //                     color: const Color(0xFFe9e6df),
-                    //                     boxShadow: const [
-                    //                       BoxShadow(
-                    //                         spreadRadius: -200,
-                    //                       )
-                    //                     ],
-                    //                     borderRadius:
-                    //                         BorderRadius.circular(10))),
-                    //           ]),
-                    //       barrierColor: Colors.transparent);
-                    // }
                   },
                   child: Text(
                     'Calculate Calories Burned',
@@ -212,4 +193,121 @@ class BigCardButton extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Widget> printSelectedWorkoutDescription(selectedWorkouts, context) {
+  return [
+    if (selectedWorkouts.isNotEmpty)
+      Padding(
+        padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+        child: Card(
+          color: const Color(0xFF99a98c),
+          child: Center(
+            child: SizedBox(
+              height: 150,
+              width: 700,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                child: SingleChildScrollView(
+                  child: ScrollConfiguration(
+                    behavior:
+                        const ScrollBehavior(), // From this behaviour you can change the behaviour
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.down,
+                      color: const Color(0xFF99a98c),
+                      child: Text(
+                        "${selectedWorkouts.last.name}:\n${selectedWorkouts.last.description}",
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFe9e6df)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    Padding(
+      padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 50.0,
+        child: ElevatedButton(
+          child: Text(
+            "Do selected Workouts (${selectedWorkouts.length})",
+            style: const TextStyle(
+                color: Color(0xFFe9e6df), fontWeight: FontWeight.bold),
+          ),
+          onPressed: () async {
+            final messenger = ScaffoldMessenger.of(context);
+            Event workout;
+            if (selectedWorkouts.isNotEmpty) {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.utc(2023, 1, 1),
+                  lastDate: DateTime.utc(2030, 12, 31));
+              for (int i = 0; i < selectedWorkouts.length; i++) {
+                if (pickedDate != null) {
+                  if (await DatabaseHelper.instance
+                      .doesNullEventExist('', '')) {
+                    workout = Event(
+                        workoutName: selectedWorkouts[i].name,
+                        workoutMuscle: selectedWorkouts[i].muscle,
+                        met: selectedWorkouts[i].met,
+                        day: pickedDate.day,
+                        month: pickedDate.month,
+                        year: pickedDate.year,
+                        totalCalories: await DatabaseHelper.instance
+                            .getCaloriesForDay(pickedDate.day, pickedDate.month,
+                                pickedDate.year),
+                        caloriesBurned: await DatabaseHelper.instance
+                            .getCaloriesBurnedForWorkout(
+                                selectedWorkouts[i].name,
+                                selectedWorkouts[i].muscle,
+                                pickedDate.day,
+                                pickedDate.month,
+                                pickedDate.year));
+                  } else {
+                    workout = Event(
+                        workoutName: selectedWorkouts[i].name,
+                        workoutMuscle: selectedWorkouts[i].muscle,
+                        met: selectedWorkouts[i].met,
+                        day: pickedDate.day,
+                        month: pickedDate.month,
+                        year: pickedDate.year,
+                        totalCalories: 0,
+                        caloriesBurned: 0);
+                  }
+                  if (!(await DatabaseHelper.instance.doesEventExist(
+                      selectedWorkouts[i].name,
+                      selectedWorkouts[i].muscle,
+                      pickedDate.day,
+                      pickedDate.month,
+                      pickedDate.year))) {
+                    DatabaseHelper.instance.insertEvent(workout);
+                    // print(await DatabaseHelper.queryAllEvents());
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            "Added ${selectedWorkouts[i].name} for ${pickedDate.month}/${pickedDate.day}/${pickedDate.year}"),
+                      ),
+                    );
+                  } else {
+                    messenger.showSnackBar(const SnackBar(
+                      content: Text("Event Already Exists"),
+                    ));
+                  }
+                }
+              }
+            }
+          },
+        ),
+      ),
+    )
+  ];
 }

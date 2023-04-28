@@ -31,7 +31,8 @@ class DatabaseHelper {
         day INTEGER,
         month INTEGER,
         year INTEGER,
-        totalCalories INTEGER
+        totalCalories INTEGER,
+        caloriesBurned REAL
       ) 
     ''';
 
@@ -186,6 +187,7 @@ class DatabaseHelper {
           'month',
           'year',
           'totalCalories'
+              'caloriesBurned'
         ],
         where: 'id = ?',
         whereArgs: [id]);
@@ -211,9 +213,33 @@ class DatabaseHelper {
         'day',
         'month',
         'year',
-        'totalCalories'
+        'totalCalories',
+        'caloriesBurned'
       ],
       where: 'day = ? AND month = ? AND year = ?',
+      whereArgs: [day, month, year],
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> queryWorkout(
+      int day, int month, int year) async {
+    Database db = await instance.database;
+
+    return await db.query(
+      'events',
+      columns: [
+        'id',
+        'workoutName',
+        'workoutMuscle',
+        'met',
+        'day',
+        'month',
+        'year',
+        'totalCalories',
+        'caloriesBurned'
+      ],
+      where:
+          'workoutName = ? AND workoutMuscle = ? AND day = ? AND month = ? AND year = ?',
       whereArgs: [day, month, year],
     );
   }
@@ -273,6 +299,21 @@ class DatabaseHelper {
         whereArgs: [day, month, year]);
   }
 
+  Future<int> updateCaloriesBurned(
+      Event event,
+      String workoutName,
+      String workoutMuscle,
+      int day,
+      int month,
+      int year,
+      double newCaloriesBurned) async {
+    final db = await instance.database;
+    return await db.update('events', {'caloriesBurned': newCaloriesBurned},
+        where:
+            'workoutName = ? AND workoutMuscle = ? AND day = ? AND month = ? AND year = ?',
+        whereArgs: [workoutName, workoutMuscle, day, month, year]);
+  }
+
   Future<int> getIDForDay(int day, int month, int year) async {
     int id = 0;
     final events = await queryEventsforDay(day, month, year);
@@ -301,9 +342,37 @@ class DatabaseHelper {
           day: day,
           month: month,
           year: year,
-          totalCalories: 0);
+          totalCalories: 0,
+          caloriesBurned: 0);
       await insertEvent(newEvent);
       return totalCalories;
+    }
+  }
+
+  Future<double> getCaloriesBurnedForWorkout(String workoutName,
+      String workoutMuscle, int day, int month, int year) async {
+    double caloriesBurned = 0;
+    final events = await queryWorkout(day, month, year);
+    //if there is data for the day, get th e total calories
+    if (events.isNotEmpty) {
+      for (final event in events) {
+        caloriesBurned = Event.fromMap(event).caloriesBurned;
+      }
+      return caloriesBurned;
+    }
+    // If no events exist for this day, create a new one and return 0
+    else {
+      final newEvent = Event(
+          workoutName: '',
+          workoutMuscle: '',
+          met: 0,
+          day: day,
+          month: month,
+          year: year,
+          totalCalories: 0,
+          caloriesBurned: 0);
+      await insertEvent(newEvent);
+      return caloriesBurned;
     }
   }
 
@@ -312,6 +381,20 @@ class DatabaseHelper {
     final events = await queryEventsforDay(day, month, year);
     for (final event in events) {
       await updateCalories(Event.fromMap(event), day, month, year, newCalories);
+    }
+  }
+
+  Future<void> setCaloriesBurnedForWorkout(
+      String workoutName,
+      String workoutMuscle,
+      int day,
+      int month,
+      int year,
+      double newCalories) async {
+    final events = await queryEventsforDay(day, month, year);
+    for (final event in events) {
+      await updateCaloriesBurned(Event.fromMap(event), workoutName,
+          workoutMuscle, day, month, year, newCalories);
     }
   }
 

@@ -1,11 +1,10 @@
-import 'package:FitSage/DatabaseHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:FitSage/NutritionPage.dart';
 import 'package:FitSage/UserDataPrint.dart';
 import 'UserForm.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'calendar.dart';
-import 'workout.dart';
+import 'Workout.dart';
 import 'GoalTracker.dart';
 
 void main() {

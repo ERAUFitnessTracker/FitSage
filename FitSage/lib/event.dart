@@ -6,6 +6,7 @@ class Event {
   int month;
   int year;
   int totalCalories;
+  double caloriesBurned;
 
   Event(
       {required this.workoutName,
@@ -14,7 +15,8 @@ class Event {
       required this.day,
       required this.month,
       required this.year,
-      required this.totalCalories});
+      required this.totalCalories,
+      required this.caloriesBurned});
 
   Map<String, dynamic> toMap() {
     return {
@@ -25,6 +27,7 @@ class Event {
       'month': month,
       'year': year,
       'totalCalories': totalCalories,
+      'caloriesBurned': caloriesBurned,
     };
   }
 
@@ -37,6 +40,7 @@ class Event {
       month: map['month'],
       year: map['year'],
       totalCalories: map['totalCalories'],
+      caloriesBurned: map['caloriesBurned'],
     );
   }
 }

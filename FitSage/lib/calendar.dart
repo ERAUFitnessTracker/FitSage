@@ -113,7 +113,7 @@ class CalendarState extends State<Calendar> {
                       padding: const EdgeInsets.all(16),
                       child: TableCalendar(
                         daysOfWeekHeight: 30,
-                        rowHeight: 40,
+                        rowHeight: 34,
                         locale: "en_US",
                         headerStyle: HeaderStyle(
                           formatButtonVisible: false,
@@ -178,19 +178,26 @@ class CalendarState extends State<Calendar> {
                 if (snapshot.hasData) {
                   final selectedWorkouts = snapshot.data!;
                   List<Event> workoutsForDay = [];
-                  for (int i = 1; i < selectedWorkouts.length; i++) {
+                  for (int i = 0; i < selectedWorkouts.length; i++) {
                     var select = selectedWorkouts[i];
-                    Event workout = Event(
-                        workoutName: select['workoutName'],
-                        workoutMuscle: select['workoutMuscle'],
-                        met: select['met'],
-                        day: select['day'],
-                        month: select['month'],
-                        year: select['year'],
-                        totalCalories: select['totalCalories']);
-                    workoutsForDay.add(workout);
+                    if (select['workoutName'].toString().isNotEmpty) {
+                      Event workout = Event(
+                          workoutName: select['workoutName'],
+                          workoutMuscle: select['workoutMuscle'],
+                          met: select['met'],
+                          day: select['day'],
+                          month: select['month'],
+                          year: select['year'],
+                          totalCalories: select['totalCalories'],
+                          caloriesBurned: select['caloriesBurned']);
+                      workoutsForDay.add(workout);
+                    }
                   }
-
+                  double totalCaloriesBurned = 0;
+                  for (int i = 0; i < selectedWorkouts.length; i++) {
+                    var select = selectedWorkouts[i];
+                    totalCaloriesBurned += select['caloriesBurned'];
+                  }
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Material(
@@ -199,7 +206,7 @@ class CalendarState extends State<Calendar> {
                       borderRadius: BorderRadius.circular(4),
                       child: SizedBox(
                         width: 350,
-                        height: 150,
+                        height: 170,
                         child: Column(
                           children: [
                             const SizedBox(height: 10),
@@ -208,6 +215,7 @@ class CalendarState extends State<Calendar> {
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
+                            const SizedBox(height: 5),
                             Expanded(
                               child: Padding(
                                 padding:
@@ -220,57 +228,87 @@ class CalendarState extends State<Calendar> {
                                     color: const Color(
                                         0xFF99a98c), // You can change your splash color
                                     child: ListView.builder(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 10, 0, 10),
-                                      itemCount: workoutsForDay.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return SizedBox(
-                                          height: 40,
-                                          child: Card(
-                                            color: const Color(0xFF99a98c),
-                                            child: Center(
-                                              child: Text(
-                                                '${workoutsForDay[index].workoutName}   (${workoutsForDay[index].workoutMuscle})',
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 255, 255, 255),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 10),
+                                        itemCount: workoutsForDay.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return SizedBox(
+                                            height: 40,
+                                            child: Card(
+                                              color: const Color(0xFF99a98c),
+                                              child: Center(
+                                                child: Text(
+                                                  '${workoutsForDay[index].workoutName}   (${workoutsForDay[index].workoutMuscle})',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    decoration: workoutsForDay[
+                                                                    index]
+                                                                .caloriesBurned !=
+                                                            0
+                                                        ? TextDecoration
+                                                            .lineThrough
+                                                        : null,
+                                                    decorationThickness: 2,
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                          );
+                                        }),
                                   ),
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 5),
                             if (workoutsForDay.isEmpty)
                               if (_selectedDay!.day == DateTime.now().day &&
                                   _selectedDay!.month == DateTime.now().month &&
                                   _selectedDay!.year == DateTime.now().year &&
                                   selectedWorkouts.isNotEmpty)
                                 Text(
-                                  'Calories for the day: ${selectedWorkouts[0]['totalCalories']}',
+                                  'Calorie Intake: ${selectedWorkouts[0]['totalCalories']}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 )
                               else
                                 const Text(
-                                  'Calories for the day: 0',
+                                  'Calorie Intake: 0',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 )
                             else if (workoutsForDay.isNotEmpty)
                               Text(
-                                'Calories for the day: ${workoutsForDay[0].totalCalories}',
+                                'Calorie Intake: ${workoutsForDay[0].totalCalories}',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                             const SizedBox(height: 10),
+                            if (workoutsForDay.isEmpty)
+                              if (_selectedDay!.day == DateTime.now().day &&
+                                  _selectedDay!.month == DateTime.now().month &&
+                                  _selectedDay!.year == DateTime.now().year &&
+                                  selectedWorkouts.isNotEmpty)
+                                Text(
+                                  'Calories Burned: ${selectedWorkouts[0]['caloriesBurned']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                )
+                              else
+                                const Text(
+                                  'Calories Burned: 0',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                            else if (workoutsForDay.isNotEmpty)
+                              Text(
+                                'Calories Burned: $totalCaloriesBurned',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            const SizedBox(height: 5),
                           ],
                         ),
                       ),

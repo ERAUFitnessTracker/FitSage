@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'event.dart';
+import 'workout.dart';
 
-class UpperModel {
-  String name, muscle, description;
-  double met;
-  bool isSelected;
-
-  UpperModel(
-      this.name, this.muscle, this.met, this.isSelected, this.description);
+class UpperModel extends WorkoutModel {
+  String muscle = 'Upper Body';
+  UpperModel(super.name, super.met, super.isSelected, super.description);
 }
 
 class UpperWorkouts extends StatefulWidget {
@@ -20,7 +17,7 @@ class UpperWorkouts extends StatefulWidget {
 
 class _UpperWorkoutsState extends State<UpperWorkouts> {
   List<UpperModel> workoutsUpper = [
-    UpperModel("Push Ups (moderate)", "Upper Body", 3.8, false, """
+    UpperModel("Push Ups (moderate)", 3.8, false, """
 Duration: 8-12 reps for 2-3 sets
 
 
@@ -29,7 +26,7 @@ Duration: 8-12 reps for 2-3 sets
 3. Pause for a moment when your chest is just above the ground.
 4. Push your body back up to the starting position by straightening your arms.
 5. Repeat for 8-12 reps, aiming for 2-3 sets."""),
-    UpperModel("Pull Ups (moderate)", "Upper Body", 3.8, false, """
+    UpperModel("Pull Ups (moderate)", 3.8, false, """
 Duration: 5-10 reps for 2-3 sets
 
 1. Find a pull up bar and grip it with your palms facing away from you and your hands slightly wider than shoulder-width apart.
@@ -37,7 +34,7 @@ Duration: 5-10 reps for 2-3 sets
 3. Engage your core and pull yourself up towards the bar by bending your arms and squeezing your shoulder blades together.
 4. Pause when your chin is above the bar, then slowly lower yourself back down to the starting position.
 5. Repeat for 5-10 reps, aiming for 2-3 sets."""),
-    UpperModel("Dips (moderate)", "Upper Body", 3.8, false, """
+    UpperModel("Dips (moderate)", 3.8, false, """
 Duration: 5-10 reps for 2-3 sets
 
 1. Find a parallel bar or dip station and grip it with your palms facing down and your hands slightly wider than shoulder-width apart.
@@ -45,7 +42,7 @@ Duration: 5-10 reps for 2-3 sets
 3. Engage your core and lower yourself down towards the bars by bending your arms.
 4. Pause when your upper arms are parallel to the ground, then push yourself back up to the starting position by straightening your arms.
 5. Repeat for 5-10 reps, aiming for 2-3 sets."""),
-    UpperModel("Wall Handstand (moderate)", "Upper Body", 3.8, false, """
+    UpperModel("Wall Handstand (moderate)", 3.8, false, """
 Duration: 10-20s for 2-3 sets
 
 1. Stand facing a wall and place your hands on the ground about shoulder-width apart.
@@ -53,7 +50,7 @@ Duration: 10-20s for 2-3 sets
 3. Slowly walk your hands back towards the wall until your body is in a straight line from your hands to your feet.
 4. Engage your core and hold this position for 10-20 seconds, or as long as you can maintain proper form.
 5. Lower your feet back down to the ground and rest for 10-20 seconds before repeating for 2-3 sets."""),
-    UpperModel("Push Ups (vigorous)", "Upper Body", 8, false, """
+    UpperModel("Push Ups (vigorous)", 8, false, """
 Duration: 12-15 reps for 4-5 sets
 
 1. Start in a high plank position with your hands slightly wider than shoulder-width apart and your feet together.
@@ -61,7 +58,7 @@ Duration: 12-15 reps for 4-5 sets
 3. Pause for a moment when your chest is just above the ground.
 4. Push your body back up to the starting position by straightening your arms.
 5. Repeat for 12-15 reps, aiming for 4-5 sets."""),
-    UpperModel("Pull Ups (vigorous)", "Upper Body", 8, false, """
+    UpperModel("Pull Ups (vigorous)", 8, false, """
 Duration: 8-12 reps for 4-5 sets
 
 1. Find a pull up bar and grip it with your palms facing away from you and your hands slightly wider than shoulder-width apart.
@@ -69,7 +66,7 @@ Duration: 8-12 reps for 4-5 sets
 3. Engage your core and pull yourself up towards the bar by bending your arms and squeezing your shoulder blades together.
 4. Pause when your chin is above the bar, then slowly lower yourself back down to the starting position.
 5. Repeat for 8-12 reps, aiming for 4-5 sets."""),
-    UpperModel("Dips (vigorous)", "Upper Body", 8, false, """
+    UpperModel("Dips (vigorous)", 8, false, """
 Duration: 8-12 reps for 4-5 sets
 
 1. Find a parallel bar or dip station and grip it with your palms facing down and your hands slightly wider than shoulder-width apart.
@@ -77,7 +74,7 @@ Duration: 8-12 reps for 4-5 sets
 3. Engage your core and lower yourself down towards the bars by bending your arms.
 4. Pause when your upper arms are parallel to the ground, then push yourself back up to the starting position by straightening your arms.
 5. Repeat for 8-12 reps, aiming for 4-5 sets."""),
-    UpperModel("Wall Handstand (vigorous)", "Upper Body", 8, false, """
+    UpperModel("Wall Handstand (vigorous)", 8, false, """
 Duration: muscle failure (as long as you can) for 2-3 sets
 
 1. Stand facing a wall and place your hands on the ground about shoulder-width apart.
@@ -120,110 +117,12 @@ Duration: muscle failure (as long as you can) for 2-3 sets
               ),
             ),
           ),
-          if (selectedWorkouts.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-              child: Card(
-                color: const Color(0xFF99a98c),
-                child: Center(
-                  child: SizedBox(
-                    height: 150,
-                    width: 700,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: SingleChildScrollView(
-                        child: ScrollConfiguration(
-                          behavior:
-                              const ScrollBehavior(), // From this behaviour you can change the behaviour
-                          child: GlowingOverscrollIndicator(
-                            axisDirection: AxisDirection.down,
-                            color: const Color(0xFF99a98c),
-                            child: Text(
-                              "${selectedWorkouts.last.name}:\n${selectedWorkouts.last.description}",
-                              textAlign: TextAlign.justify,
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFe9e6df)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50.0,
-              child: ElevatedButton(
-                child: Text(
-                  "Do selected workouts (${selectedWorkouts.length})",
-                  style: const TextStyle(
-                      color: Color(0xFFe9e6df), fontWeight: FontWeight.bold),
-                ),
-                onPressed: () async {
-                  final messenger = ScaffoldMessenger.of(context);
-                  Event workout;
-                  if (selectedWorkouts.isNotEmpty) {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.utc(2023, 1, 1),
-                        lastDate: DateTime.utc(2030, 12, 31));
-                    for (int i = 0; i < selectedWorkouts.length; i++) {
-                      if (pickedDate != null) {
-                        if (await DatabaseHelper.instance
-                            .doesNullEventExist('', '')) {
-                          workout = Event(
-                              workoutName: selectedWorkouts[i].name,
-                              workoutMuscle: selectedWorkouts[i].muscle,
-                              met: selectedWorkouts[i].met,
-                              day: pickedDate.day,
-                              month: pickedDate.month,
-                              year: pickedDate.year,
-                              totalCalories: await DatabaseHelper.instance
-                                  .getCaloriesForDay(pickedDate.day,
-                                      pickedDate.month, pickedDate.year));
-                        } else {
-                          workout = Event(
-                              workoutName: selectedWorkouts[i].name,
-                              workoutMuscle: selectedWorkouts[i].muscle,
-                              met: selectedWorkouts[i].met,
-                              day: pickedDate.day,
-                              month: pickedDate.month,
-                              year: pickedDate.year,
-                              totalCalories: 0);
-                        }
-                        if (!(await DatabaseHelper.instance.doesEventExist(
-                            selectedWorkouts[i].name,
-                            selectedWorkouts[i].muscle,
-                            pickedDate.day,
-                            pickedDate.month,
-                            pickedDate.year))) {
-                          DatabaseHelper.instance.insertEvent(workout);
-                          // print(await DatabaseHelper.queryAllEvents());
-                          messenger.showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                  "Added ${selectedWorkouts[i].name} for ${pickedDate.month}/${pickedDate.day}/${pickedDate.year}"),
-                            ),
-                          );
-                        } else {
-                          messenger.showSnackBar(const SnackBar(
-                            content: Text("Event Already Exists"),
-                          ));
-                        }
-                      }
-                    }
-                  }
-                },
-              ),
-            ),
-          ),
+          for (int i = 0;
+              i <
+                  printSelectedWorkoutDescription(selectedWorkouts, context)
+                      .length;
+              i++)
+            printSelectedWorkoutDescription(selectedWorkouts, context)[i],
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
             child: Align(
@@ -277,8 +176,8 @@ Duration: muscle failure (as long as you can) for 2-3 sets
               workoutsUpper[index].isSelected =
                   !workoutsUpper[index].isSelected;
               if (workoutsUpper[index].isSelected) {
-                selectedWorkouts.add(
-                    UpperModel(name, muscle, met, isSelected, description));
+                selectedWorkouts
+                    .add(UpperModel(name, met, isSelected, description));
               } else if (!(workoutsUpper[index].isSelected)) {
                 selectedWorkouts.removeWhere(
                     (element) => element.name == workoutsUpper[index].name);
