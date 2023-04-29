@@ -85,6 +85,7 @@ Duration: muscle failure (as long as you can) for 2-3 sets
   ];
 
   List<UpperModel> selectedWorkouts = [];
+  final WorkoutPage _workoutPage = const WorkoutPage();
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +120,13 @@ Duration: muscle failure (as long as you can) for 2-3 sets
           ),
           for (int i = 0;
               i <
-                  printSelectedWorkoutDescription(selectedWorkouts, context)
+                  _workoutPage
+                      .printSelectedWorkoutDescription(
+                          selectedWorkouts, context)
                       .length;
               i++)
-            printSelectedWorkoutDescription(selectedWorkouts, context)[i],
+            _workoutPage.printSelectedWorkoutDescription(
+                selectedWorkouts, context)[i],
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
             child: Align(

@@ -43,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
     const NutritionPage(),
     const HomePage(),
     const WorkoutPage(),
-    const ProfileFormPage()
   ];
 
   void _onItemTapped(int index) {

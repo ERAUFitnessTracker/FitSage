@@ -100,11 +100,11 @@ class Calculators {
     }
   }
 
-  double caloriesBurned(double weight, int time, double met) {
+  double calcCaloriesBurned(double weight, int time, double met) {
     double calBurned =
         (((((((met) * (weight / 2.205) * 3.5) / 200) * time) * 100)) / 100)
             .roundToDouble();
-    print("cal burned: $calBurned");
+    // print("cal burned: $calBurned");
     return calBurned;
   }
 
