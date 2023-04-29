@@ -56,34 +56,11 @@ class _GoalTrackerState extends State<GoalTracker> {
               goalRange =
                   Calculators().calcGoalRange(BMR, goal).roundToDouble();
               if (goal == 'Lose Weight') {
-                goalPrint = 'Recommended Total Calories per day: $goalRange';
+                goalPrint = 'Recommended Total Calories per day: < $goalRange';
               } else if (goal == 'Gain Weight') {
                 goalPrint = 'Recommended Total Calories per day: $goalRange';
               } else if (goal == 'Maintain Weight') {
-                goalPrint = 'Recommended Total Calories per day: $goalRange';
-              }
-
-              for (int i = 0; i < 5; i++) {
-                getCals(day - i, month, year);
-                print(totalCalories);
-
-                switch (i) {
-                  case 0:
-                    totalCalories1 = totalCalories;
-                    break;
-                  case 1:
-                    totalCalories2 = totalCalories;
-                    break;
-                  case 2:
-                    totalCalories3 = totalCalories;
-                    break;
-                  case 3:
-                    totalCalories4 = totalCalories;
-                    break;
-                  case 4:
-                    totalCalories5 = totalCalories;
-                    break;
-                }
+                goalPrint = 'Recommended Total Calories per day: > $goalRange';
               }
 
               return Column(
@@ -123,6 +100,8 @@ class _GoalTrackerState extends State<GoalTracker> {
                                             fontWeight: FontWeight.bold)),
                                   ),
                                 ),
+                                for (int i = 0; i < 5; i++)
+                                  getCals(day - i, month, year, i),
                               ],
                             ),
                           ),
@@ -141,15 +120,41 @@ class _GoalTrackerState extends State<GoalTracker> {
         });
   }
 
-  Widget getCals(int day, int month, int year) {
+  Widget getCals(int day, int month, int year, int i) {
     return FutureBuilder<List<Map<String, dynamic>>>(
         future: DatabaseHelper.instance.queryEventsforDay(day, month, year),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final events = snapshot.data!;
-            final event = events[0];
-            totalCalories = double.parse(event['totalCalories']);
-            print("test $event");
+            print(i);
+            if (events.isNotEmpty) {
+              final event = events[0];
+              print(i);
+              totalCalories = double.parse(event['totalCalories'].toString());
+              double calBurned = 0;
+              for (int j = 0; j < events.length; j++) {
+                calBurned = events[j]['caloriesBurned'];
+                totalCalories -= calBurned;
+              }
+              switch (i) {
+                case 0:
+                  totalCalories1 = totalCalories;
+                  break;
+                case 1:
+                  totalCalories2 = totalCalories;
+                  break;
+                case 2:
+                  totalCalories3 = totalCalories;
+                  break;
+                case 3:
+                  totalCalories4 = totalCalories;
+                  break;
+                case 4:
+                  totalCalories5 = totalCalories;
+                  break;
+              }
+            }
+
             return Container();
           } else {
             return Container();

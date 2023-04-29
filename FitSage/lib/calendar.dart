@@ -271,18 +271,18 @@ class CalendarState extends State<Calendar> {
                                   _selectedDay!.year == DateTime.now().year &&
                                   selectedWorkouts.isNotEmpty)
                                 Text(
-                                  'Calorie Intake: ${selectedWorkouts[0]['totalCalories']}',
+                                  'Calorie Intake: ${selectedWorkouts[0]['totalCalories']} | Burned: $totalCaloriesBurned}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 )
                               else
                                 const Text(
-                                  'Calorie Intake: 0',
+                                  'Intake: 0 | Burned: 0',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 )
                             else if (workoutsForDay.isNotEmpty)
                               Text(
-                                'Calorie Intake: ${workoutsForDay[0].totalCalories}',
+                                'Intake: ${workoutsForDay[0].totalCalories} | Burned: $totalCaloriesBurned',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -293,18 +293,18 @@ class CalendarState extends State<Calendar> {
                                   _selectedDay!.year == DateTime.now().year &&
                                   selectedWorkouts.isNotEmpty)
                                 Text(
-                                  'Calories Burned: ${selectedWorkouts[0]['caloriesBurned']}',
+                                  'Total Calories for the Day: ${selectedWorkouts[0]['totalCalories'] - totalCaloriesBurned}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 )
                               else
                                 const Text(
-                                  'Calories Burned: 0',
+                                  'Total Calories for the Day: 0',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 )
                             else if (workoutsForDay.isNotEmpty)
                               Text(
-                                'Calories Burned: $totalCaloriesBurned',
+                                'Total Calories for the Day: ${selectedWorkouts[0]['totalCalories'] - totalCaloriesBurned}',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
