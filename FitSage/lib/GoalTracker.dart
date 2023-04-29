@@ -28,7 +28,7 @@ class _GoalTrackerState extends State<GoalTracker> {
   int age = 0;
   String gender = '';
   String goal = '';
-  double BMR = 0;
+  double bmr = 0;
   double goalRange = 0;
   String goalPrint = '';
   double totalCalories = 0;
@@ -37,7 +37,6 @@ class _GoalTrackerState extends State<GoalTracker> {
   double totalCalories3 = 0;
   double totalCalories4 = 0;
   double totalCalories5 = 0;
-  List<double> cals = [];
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +52,9 @@ class _GoalTrackerState extends State<GoalTracker> {
               age = (user['age']);
               gender = (user['gender']);
               goal = (user['goal']);
-              BMR = Calculators().calcBMR(weight, height, age, gender);
+              bmr = Calculators().calcBMR(weight, height, age, gender);
               goalRange =
-                  Calculators().calcGoalRange(BMR, goal).roundToDouble();
+                  Calculators().calcGoalRange(bmr, goal).roundToDouble();
               if (goal == 'Lose Weight') {
                 goalPrint = 'Calories to Lose Weight: < $goalRange';
               } else if (goal == 'Gain Weight') {
