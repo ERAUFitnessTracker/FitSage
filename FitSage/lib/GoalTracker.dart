@@ -57,11 +57,11 @@ class _GoalTrackerState extends State<GoalTracker> {
               goalRange =
                   Calculators().calcGoalRange(BMR, goal).roundToDouble();
               if (goal == 'Lose Weight') {
-                goalPrint = 'Recommended Total Calories per day: < $goalRange';
+                goalPrint = 'Calories to Lose Weight: < $goalRange';
               } else if (goal == 'Gain Weight') {
-                goalPrint = 'Recommended Total Calories per day: $goalRange';
+                goalPrint = 'Calories to Gain Weight: > $goalRange';
               } else if (goal == 'Maintain Weight') {
-                goalPrint = 'Recommended Total Calories per day: > $goalRange';
+                goalPrint = 'Calories to Maintain Weight: = $goalRange';
               }
 
               return Column(
@@ -94,13 +94,12 @@ class _GoalTrackerState extends State<GoalTracker> {
                                     ),
                                   ),
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.topCenter,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 5, 10, 10),
-                                    child: Text(goalPrint,
-                                        style: const TextStyle(
+                                    padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                                    child: Text('Goal Tracker',
+                                        style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ),
                                 ),
@@ -113,6 +112,7 @@ class _GoalTrackerState extends State<GoalTracker> {
                                       height: 25,
                                       width: 25,
                                       child: FloatingActionButton(
+                                        heroTag: 'bt2',
                                         backgroundColor:
                                             const Color(0xFF99a98c),
                                         child: const Icon(
@@ -294,6 +294,23 @@ class _GoalTrackerState extends State<GoalTracker> {
       maxX: 5,
       minY: 0,
       maxY: 3000,
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+              y: goalRange,
+              color: const Color(0xFF99a98c),
+              label: HorizontalLineLabel(
+                show: true,
+                alignment: Alignment.topCenter,
+                labelResolver: (value) => goalPrint,
+                style: const TextStyle(
+                  color: Color(0xFF99a98c),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+        ],
+      ),
       lineBarsData: [
         LineChartBarData(
           spots: [
@@ -308,12 +325,14 @@ class _GoalTrackerState extends State<GoalTracker> {
             colors: gradientColors,
           ),
           barWidth: 5,
-          isStrokeCapRound: true,
+          isStrokeCapRound: false,
           dotData: FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: true,
+            cutOffY: 0,
+            applyCutOffY: true,
+            show: false,
             gradient: LinearGradient(
               colors: gradientColors
                   .map((color) => color.withOpacity(0.3))

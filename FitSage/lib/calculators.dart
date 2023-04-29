@@ -37,7 +37,7 @@ class Calculators {
   double calcGoalRange(double BMR, String goal) {
     switch (goal.toLowerCase()) {
       case 'lose weight':
-        return BMR * 9;
+        return BMR * 0.9;
       case 'maintain weight':
         return BMR;
       case 'gain weight':
