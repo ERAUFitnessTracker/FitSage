@@ -37,6 +37,7 @@ class _GoalTrackerState extends State<GoalTracker> {
   double totalCalories3 = 0;
   double totalCalories4 = 0;
   double totalCalories5 = 0;
+  List<double> cals = [];
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,10 @@ class _GoalTrackerState extends State<GoalTracker> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(25, 60, 25, 10),
-                        child: Card(
+                        child: Material(
+                          elevation: 10,
+                          shadowColor: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(4),
                           child: SizedBox(
                             height: 150,
                             width: 350,
@@ -83,7 +87,7 @@ class _GoalTrackerState extends State<GoalTracker> {
                                     width: 350,
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          10, 5, 25, 0),
+                                          10, 5, 40, 0),
                                       child: LineChart(
                                         mainData(),
                                       ),
@@ -100,8 +104,30 @@ class _GoalTrackerState extends State<GoalTracker> {
                                             fontWeight: FontWeight.bold)),
                                   ),
                                 ),
-                                for (int i = 0; i < 5; i++)
-                                  getCals(day - i, month, year, i),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 8, 0),
+                                    child: SizedBox(
+                                      height: 25,
+                                      width: 25,
+                                      child: FloatingActionButton(
+                                        backgroundColor:
+                                            const Color(0xFF99a98c),
+                                        child: const Icon(
+                                          Icons.refresh,
+                                          size: 15,
+                                        ),
+                                        onPressed: () => setState(() {
+                                          for (int i = 0; i < 5; i++) {
+                                            getCals(day - i, month, year, i);
+                                          }
+                                        }),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -120,46 +146,37 @@ class _GoalTrackerState extends State<GoalTracker> {
         });
   }
 
-  Widget getCals(int day, int month, int year, int i) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-        future: DatabaseHelper.instance.queryEventsforDay(day, month, year),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final events = snapshot.data!;
-            print(i);
-            if (events.isNotEmpty) {
-              final event = events[0];
-              print(i);
-              totalCalories = double.parse(event['totalCalories'].toString());
-              double calBurned = 0;
-              for (int j = 0; j < events.length; j++) {
-                calBurned = events[j]['caloriesBurned'];
-                totalCalories -= calBurned;
-              }
-              switch (i) {
-                case 0:
-                  totalCalories1 = totalCalories;
-                  break;
-                case 1:
-                  totalCalories2 = totalCalories;
-                  break;
-                case 2:
-                  totalCalories3 = totalCalories;
-                  break;
-                case 3:
-                  totalCalories4 = totalCalories;
-                  break;
-                case 4:
-                  totalCalories5 = totalCalories;
-                  break;
-              }
-            }
+  Future<void> getCals(int day, int month, int year, int i) async {
+    List<Map<String, dynamic>> events =
+        await DatabaseHelper.instance.queryEventsforDay(day, month, year);
 
-            return Container();
-          } else {
-            return Container();
-          }
-        });
+    if (events.isNotEmpty) {
+      double totalCalories =
+          double.parse(events[0]['totalCalories'].toString());
+      double calBurned = 0;
+
+      for (int j = 0; j < events.length; j++) {
+        calBurned = events[j]['caloriesBurned'];
+        totalCalories -= calBurned;
+      }
+      switch (i) {
+        case 0:
+          totalCalories1 = totalCalories;
+          break;
+        case 1:
+          totalCalories2 = totalCalories;
+          break;
+        case 2:
+          totalCalories3 = totalCalories;
+          break;
+        case 3:
+          totalCalories4 = totalCalories;
+          break;
+        case 4:
+          totalCalories5 = totalCalories;
+          break;
+      }
+    }
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -284,7 +301,7 @@ class _GoalTrackerState extends State<GoalTracker> {
             FlSpot(2, totalCalories4),
             FlSpot(3, totalCalories3),
             FlSpot(4, totalCalories2),
-            FlSpot(5, totalCalories1)
+            FlSpot(5, totalCalories1),
           ],
           isCurved: true,
           gradient: LinearGradient(
