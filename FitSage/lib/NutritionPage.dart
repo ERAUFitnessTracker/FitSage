@@ -194,14 +194,14 @@ class _NutritionPageState extends State<NutritionPage> {
 
   void showSnackBar() async {
     final messenger = ScaffoldMessenger.of(context);
-    int id = 0;
+    int calories = 0;
     String textForSnackBar;
     if (await DatabaseHelper.instance.getCaloriesForDay(
             DateTime.now().day, DateTime.now().month, DateTime.now().year) >=
         0) {
-      id = await DatabaseHelper.instance.getIDForDay(
+      calories = await DatabaseHelper.instance.getCaloriesForDay(
           DateTime.now().day, DateTime.now().month, DateTime.now().year);
-      textForSnackBar = 'Event $id updated!';
+      textForSnackBar = 'Calorie Intake Updated!';
     } else {
       // print("this shouldn't happen uh oh");
       textForSnackBar = "this shouldn't happen";
