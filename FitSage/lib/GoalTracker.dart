@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'calculators.dart';
 import 'DatabaseHelper.dart';
-import 'event.dart';
 
 class GoalTracker extends StatefulWidget {
   const GoalTracker({super.key});

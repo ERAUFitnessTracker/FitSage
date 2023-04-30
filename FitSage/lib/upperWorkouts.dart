@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'DatabaseHelper.dart';
-import 'event.dart';
 import 'workout.dart';
 
 class UpperModel extends WorkoutModel {
@@ -102,7 +100,7 @@ Duration: muscle failure (as long as you can) for 2-3 sets
                 color:
                     const Color(0xFF99a98c), // You can change your splash color
                 child: ListView.builder(
-                  padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
                   itemCount: workoutsUpper.length,
                   itemBuilder: (BuildContext context, int index) {
                     return UpperWorkoutItem(

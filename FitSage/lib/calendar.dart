@@ -250,7 +250,7 @@ class CalendarState extends State<Calendar> {
                                                             .lineThrough
                                                         : null,
                                                     decorationThickness: 2,
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                         255, 255, 255, 255),
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,

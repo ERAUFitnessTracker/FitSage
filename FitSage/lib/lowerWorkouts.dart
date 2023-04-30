@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'DatabaseHelper.dart';
-import 'event.dart';
 import 'workout.dart';
 
 class LowerModel extends WorkoutModel {

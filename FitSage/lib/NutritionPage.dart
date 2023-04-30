@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:async';
 import 'DatabaseHelper.dart';
-import 'calendar.dart';
 
 class NutritionPage extends StatefulWidget {
   const NutritionPage({super.key});
@@ -194,6 +193,7 @@ class _NutritionPageState extends State<NutritionPage> {
 
   void showSnackBar() async {
     final messenger = ScaffoldMessenger.of(context);
+    // ignore: unused_local_variable
     int calories = 0;
     String textForSnackBar;
     if (await DatabaseHelper.instance.getCaloriesForDay(
