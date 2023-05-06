@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:FitSage/NutritionPage.dart';
-import 'package:FitSage/UserDataPrint.dart';
-import 'UserForm.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'calendar.dart';
+import 'package:FitSage/NutritionPage/NutritionPage.dart';
+
+import 'package:FitSage/HomePage/HomePage.dart';
 import 'Workout.dart';
-import 'GoalTracker.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -85,135 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        const CalendarPage(),
-        const GoalTracker(),
-        Positioned(
-          top: 40.0,
-          right: 20.0,
-          child: FloatingActionButton(
-              backgroundColor: const Color(0xFF99a98c),
-              child: const Icon(Icons.person_rounded),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfileDataPage()),
-                );
-              }),
-        ),
-      ],
-    );
-  }
-}
-
-class ProfileDataPage extends StatelessWidget {
-  const ProfileDataPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'PROFILE',
-          style: GoogleFonts.ubuntu(
-            textStyle: const TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.normal,
-              color: Color(0xFFFFFFFF),
-              letterSpacing: 3.0,
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF99a98c),
-      ),
-      backgroundColor: const Color(0xFFe9e6df),
-      body: Center(
-        //Column where all the elements will be
-        child: Column(
-          children: <Widget>[
-            const UserDataPrint(),
-            // const UserForm(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                tooltip: 'Back To Home',
-                backgroundColor: const Color(0xFF99a98c),
-                child: const Icon(Icons.close),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileFormPage extends StatelessWidget {
-  const ProfileFormPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'PROFILE',
-          style: GoogleFonts.ubuntu(
-            textStyle: const TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.normal,
-              color: Color(0xFFFFFFFF),
-              letterSpacing: 3.0,
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF99a98c),
-      ),
-      backgroundColor: const Color(0xFFe9e6df),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 0),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: <Widget>[
-                const UserForm(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    tooltip: 'Back To Home',
-                    backgroundColor: const Color(0xFF99a98c),
-                    child: const Icon(Icons.close),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

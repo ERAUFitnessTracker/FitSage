@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'calculators.dart';
-import 'DatabaseHelper.dart';
+import 'package:FitSage/calculators.dart';
+import 'package:FitSage/DatabaseHelper.dart';
 
 class GoalTracker extends StatefulWidget {
   const GoalTracker({super.key});
@@ -67,67 +67,64 @@ class _GoalTrackerState extends State<GoalTracker> {
                 children: [
                   Stack(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 60, 25, 10),
-                        child: Material(
-                          elevation: 10,
-                          shadowColor: Colors.grey.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(4),
-                          child: SizedBox(
-                            height: 150,
-                            width: 350,
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.bottomCenter,
+                      Material(
+                        elevation: 10,
+                        shadowColor: Colors.grey.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(4),
+                        child: SizedBox(
+                          height: 170,
+                          width: 350,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SizedBox(
+                                  height: 130,
+                                  width: 350,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10, 5, 40, 0),
+                                    child: LineChart(
+                                      mainData(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                                  child: Text('Goal Tracker',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 8, 0),
                                   child: SizedBox(
-                                    height: 130,
-                                    width: 350,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 5, 40, 0),
-                                      child: LineChart(
-                                        mainData(),
+                                    height: 25,
+                                    width: 25,
+                                    child: FloatingActionButton(
+                                      heroTag: 'bt2',
+                                      backgroundColor:
+                                          const Color(0xFF99a98c),
+                                      child: const Icon(
+                                        Icons.refresh,
+                                        size: 15,
                                       ),
+                                      onPressed: () => setState(() {
+                                        for (int i = 0; i < 5; i++) {
+                                          getCals(day - i, month, year, i);
+                                        }
+                                      }),
                                     ),
                                   ),
                                 ),
-                                const Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
-                                    child: Text('Goal Tracker',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 0, 8, 0),
-                                    child: SizedBox(
-                                      height: 25,
-                                      width: 25,
-                                      child: FloatingActionButton(
-                                        heroTag: 'bt2',
-                                        backgroundColor:
-                                            const Color(0xFF99a98c),
-                                        child: const Icon(
-                                          Icons.refresh,
-                                          size: 15,
-                                        ),
-                                        onPressed: () => setState(() {
-                                          for (int i = 0; i < 5; i++) {
-                                            getCals(day - i, month, year, i);
-                                          }
-                                        }),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

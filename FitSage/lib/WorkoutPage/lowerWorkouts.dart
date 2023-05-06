@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'workout.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:FitSage/WorkoutPage/WorkoutPage.dart';
 
 class LowerModel extends WorkoutModel {
   String muscle = 'Lower Body';
@@ -99,10 +100,31 @@ Duration: 12-15 reps for 3-4 sets
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'LOWER WORKOUTS',
+          style: GoogleFonts.ubuntu(
+            textStyle: const TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+              color: Color(0xFFFFFFFF),
+              letterSpacing: 3.0,
+            ),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF99a98c),
+      ),
+      backgroundColor: const Color(0xFFe9e6df),
+      body: SingleChildScrollView(child: Column(
         children: [
-          SizedBox(
-            height: 500,
+          Padding(
+              padding: const EdgeInsets.fromLTRB(0,25,0,0),
+              child: SizedBox(
+                height: selectedWorkouts.isEmpty ? 500 : 332,
             child: ScrollConfiguration(
               behavior:
                   const ScrollBehavior(), // From this behaviour you can change the behaviour
@@ -111,7 +133,7 @@ Duration: 12-15 reps for 3-4 sets
                 color:
                     const Color(0xFF99a98c), // You can change your splash color
                 child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   itemCount: workoutsLower.length,
                   itemBuilder: (BuildContext context, int index) {
                     return LowerWorkoutItem(
@@ -126,6 +148,7 @@ Duration: 12-15 reps for 3-4 sets
                 ),
               ),
             ),
+          ),
           ),
           for (int i = 0;
               i <
@@ -151,6 +174,7 @@ Duration: 12-15 reps for 3-4 sets
             ),
           ),
         ],
+      ),
       ),
     );
   }

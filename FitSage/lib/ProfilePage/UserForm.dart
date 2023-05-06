@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:FitSage/main.dart';
-import 'user.dart';
-import 'DatabaseHelper.dart';
+import 'package:FitSage/ProfilePage/ProfilePage.dart';
+import 'package:FitSage/ProfilePage/user.dart';
+import '../DatabaseHelper.dart';
 
 class UserForm extends StatefulWidget {
   const UserForm({super.key});

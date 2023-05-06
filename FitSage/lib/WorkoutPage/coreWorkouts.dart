@@ -1,7 +1,8 @@
 // ignore_for_file: overridden_fields
 
 import 'package:flutter/material.dart';
-import 'workout.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:FitSage/WorkoutPage/WorkoutPage.dart';
 
 class CoreModel extends WorkoutModel {
   String muscle = 'Core';
@@ -86,58 +87,82 @@ Duration: 15-20 reps for 3-4 sets
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 500,
-            child: ScrollConfiguration(
-              behavior:
-                  const ScrollBehavior(), // From this behaviour you can change the behaviour
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color:
-                    const Color(0xFF99a98c), // You can change your splash color
-                child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
-                  itemCount: workoutsCore.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CoreWorkoutItem(
-                      workoutsCore[index].name,
-                      workoutsCore[index].muscle,
-                      workoutsCore[index].met,
-                      workoutsCore[index].isSelected,
-                      workoutsCore[index].description,
-                      index,
-                    );
-                  },
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'CORE WORKOUTS',
+          style: GoogleFonts.ubuntu(
+            textStyle: const TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+              color: Color(0xFFFFFFFF),
+              letterSpacing: 3.0,
+            ),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF99a98c),
+      ),
+      backgroundColor: const Color(0xFFe9e6df),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0,25,0,0),
+              child: SizedBox(
+                height: selectedWorkouts.isEmpty ? 500 : 332,
+                child: ScrollConfiguration(
+                  behavior:
+                      const ScrollBehavior(), // From this behaviour you can change the behaviour
+                  child: GlowingOverscrollIndicator(
+                    axisDirection: AxisDirection.down,
+                    color:
+                        const Color(0xFF99a98c), // You can change your splash color
+                    child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      itemCount: workoutsCore.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CoreWorkoutItem(
+                          workoutsCore[index].name,
+                          workoutsCore[index].muscle,
+                          workoutsCore[index].met,
+                          workoutsCore[index].isSelected,
+                          workoutsCore[index].description,
+                          index,
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          for (int i = 0;
-              i <
-                  _workoutPage //added these too because printSelectedWorkoutDescription is now part of workoutPage
-                      .printSelectedWorkoutDescription(
-                          selectedWorkouts, context)
-                      .length;
-              i++)
-            _workoutPage.printSelectedWorkoutDescription(
-                selectedWorkouts, context)[i],
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                tooltip: 'Back To Home',
-                backgroundColor: const Color(0xFF99a98c),
-                child: const Icon(Icons.close),
+            for (int i = 0;
+                i <
+                    _workoutPage //added these too because printSelectedWorkoutDescription is now part of workoutPage
+                        .printSelectedWorkoutDescription(
+                            selectedWorkouts, context)
+                        .length;
+                i++)
+              _workoutPage.printSelectedWorkoutDescription(
+                  selectedWorkouts, context)[i],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  tooltip: 'Back To Home',
+                  backgroundColor: const Color(0xFF99a98c),
+                  child: const Icon(Icons.close),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

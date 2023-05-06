@@ -3,42 +3,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:FitSage/main.dart';
-import 'DatabaseHelper.dart';
-import 'BiometricInput.dart';
-import 'calculators.dart';
+import 'package:FitSage/ProfilePage/ProfilePage.dart';
+import 'package:FitSage/ProfilePage/BiometricInput.dart';
+import '../DatabaseHelper.dart';
+import '../calculators.dart';
 
 class UserDataPrint extends StatelessWidget {
   const UserDataPrint({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 370,
-      height: 660,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            NameFromDatabase(),
-            const SizedBox(height: 10),
-            WeightFromDatabase(),
-            const SizedBox(height: 10),
-            HeightFromDatabase(),
-            const SizedBox(height: 10),
-            AgeFromDatabase(),
-            const SizedBox(height: 10),
-            GenderFromDatabase(),
-            const SizedBox(height: 10),
-            GoalFromDatabase(),
-            const SizedBox(height: 20),
-            BMIFromDatabase(),
-            const SizedBox(height: 10),
-            BFPFromDatabase(),
-            const SizedBox(height: 20),
-            const EditButton(),
-          ],
+    return SingleChildScrollView(
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 10,
+            children: [
+              NameFromDatabase(),
+              WeightFromDatabase(),
+              HeightFromDatabase(),
+              AgeFromDatabase(),
+              GenderFromDatabase(),
+              GoalFromDatabase(),
+              BMIFromDatabase(),
+              BFPFromDatabase(),
+              const EditButton(),
+            ],
+          ),
         ),
       ),
     );

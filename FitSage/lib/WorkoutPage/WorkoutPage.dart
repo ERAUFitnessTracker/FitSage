@@ -5,7 +5,7 @@ import 'upperWorkouts.dart';
 import 'lowerWorkouts.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'calculators.dart';
-import 'event.dart';
+import 'package:FitSage/HomePage/event.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 class WorkoutModel {

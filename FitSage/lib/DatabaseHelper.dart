@@ -3,8 +3,8 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'user.dart';
-import 'event.dart';
+import 'package:FitSage/ProfilePage/user.dart';
+import 'package:FitSage/HomePage/event.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._getInstance();
