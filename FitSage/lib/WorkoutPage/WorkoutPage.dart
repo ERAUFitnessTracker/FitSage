@@ -1,10 +1,10 @@
 import 'package:FitSage/DatabaseHelper.dart';
-import 'package:FitSage/coreWorkouts.dart';
+import 'package:FitSage/WorkoutPage/coreWorkouts.dart';
 import 'package:flutter/material.dart';
 import 'upperWorkouts.dart';
 import 'lowerWorkouts.dart';
 import 'package:duration_picker/duration_picker.dart';
-import 'calculators.dart';
+import '../calculators.dart';
 import 'package:FitSage/HomePage/event.dart';
 
 //import 'package:google_fonts/google_fonts.dart';

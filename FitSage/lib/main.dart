@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:FitSage/NutritionPage/NutritionPage.dart';
 
 import 'package:FitSage/HomePage/HomePage.dart';
-import 'Workout.dart';
+import 'package:FitSage/WorkoutPage/WorkoutPage.dart';
 
 
 void main() {
