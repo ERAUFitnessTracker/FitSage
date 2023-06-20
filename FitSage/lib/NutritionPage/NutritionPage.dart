@@ -15,12 +15,13 @@ class NutritionPage extends StatefulWidget {
 class _NutritionPageState extends State<NutritionPage> {
   late String result = "";
 
-  bool imageRetakeNeeded = false;
+  bool imageRetakeNeeded = true;
   bool databaseUpdated = false;
 
   File? _image;
   InputImage? inputImage;
   final picker = ImagePicker();
+  final TextEditingController _calorieController = TextEditingController();
 
 //open gallery and choose an image
   Future pickImageFromGallery() async {
@@ -126,18 +127,49 @@ class _NutritionPageState extends State<NutritionPage> {
 //displays "Gallery" and "Camera" buttons
   Widget chooseImageButtons() {
     databaseUpdated = false;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        buttonTemplate(() {
-          pickImageFromGallery();
-        }, 'Gallery'),
-        buttonTemplate(
-          () {
-            captureImageFromCamera();
-          },
-          'Camera',
-        ),
+        imageRetakeNeeded
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buttonTemplate(
+                      () {
+                        pickImageFromGallery();
+                      },
+                      'Gallery',
+                    ),
+                    buttonTemplate(
+                      () {
+                        captureImageFromCamera();
+                      },
+                      'Camera',
+                    ),
+                  ],
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buttonTemplate(() {
+                    addCaloriesToDatabase();
+                    // print('save calories button pressed');
+                    setState(() {
+                      databaseUpdated = true;
+                      imageRetakeNeeded = true;
+                    });
+                    showSnackBar();
+                  }, 'Save Calories'),
+                  buttonTemplate(() {
+                    // print('choose another image pressed');
+                    setState(() {
+                      imageRetakeNeeded = true;
+                    });
+                  }, 'Choose Another Image'),
+                ],
+              ),
       ],
     );
   }
@@ -162,31 +194,7 @@ class _NutritionPageState extends State<NutritionPage> {
             style: const TextStyle(fontSize: 24),
           ),
         ),
-        //displays chooseImageButtons if a retake is needed
-        imageRetakeNeeded
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: chooseImageButtons(),
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buttonTemplate(() {
-                    addCaloriesToDatabase();
-                    // print('save calories button pressed');
-                    setState(() {
-                      databaseUpdated = true;
-                    });
-                    showSnackBar();
-                  }, 'Save Calories'),
-                  buttonTemplate(() {
-                    // print('choose another image pressed');
-                    setState(() {
-                      imageRetakeNeeded = true;
-                    });
-                  }, 'Choose Another Image'),
-                ],
-              ),
+        chooseImageButtons(),
       ],
     );
   }
