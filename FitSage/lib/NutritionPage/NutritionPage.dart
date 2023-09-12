@@ -293,7 +293,7 @@ class _NutritionPageState extends State<NutritionPage> {
   }
 
   void addCaloriesToDatabase(String calories) async {
-    print("result: $calories");
+    // print("result: $calories");
     await DatabaseHelper.instance.incrementCaloriesForDay(DateTime.now().day,
         DateTime.now().month, DateTime.now().year, int.parse(calories));
   }
