@@ -150,7 +150,6 @@ class CalendarState extends State<Calendar> {
                         workoutsForDay.add(workout);
                       }
                     }
-                    // ignore: unused_local_variable
                     double totalCaloriesBurned = 0;
                     for (int i = 0; i < selectedWorkouts.length; i++) {
                       var select = selectedWorkouts[i];
@@ -234,7 +233,7 @@ class CalendarState extends State<Calendar> {
                                     _selectedDay!.year == DateTime.now().year &&
                                     selectedWorkouts.isNotEmpty)
                                   Text(
-                                    'Calorie Intake: ${selectedWorkouts[0]['totalCalories']} | Burned: $totalCaloriesBurned}',
+                                    'Calorie Intake: ${selectedWorkouts[0]['totalCalories']} | Burned: $totalCaloriesBurned',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   )

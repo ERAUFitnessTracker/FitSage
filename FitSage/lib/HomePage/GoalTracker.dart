@@ -234,7 +234,6 @@ class _GoalTrackerState extends State<GoalTracker> {
 
     return Text(text, style: style, textAlign: TextAlign.right);
   }
-
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
