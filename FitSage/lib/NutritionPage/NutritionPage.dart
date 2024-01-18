@@ -15,12 +15,13 @@ class NutritionPage extends StatefulWidget {
 class _NutritionPageState extends State<NutritionPage> {
   late String result = "";
 
-  bool imageRetakeNeeded = false;
+  bool imageRetakeNeeded = true;
   bool databaseUpdated = false;
 
   File? _image;
   InputImage? inputImage;
   final picker = ImagePicker();
+  final TextEditingController _calorieController = TextEditingController();
 
 //open gallery and choose an image
   Future pickImageFromGallery() async {
@@ -126,17 +127,87 @@ class _NutritionPageState extends State<NutritionPage> {
 //displays "Gallery" and "Camera" buttons
   Widget chooseImageButtons() {
     databaseUpdated = false;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        buttonTemplate(() {
-          pickImageFromGallery();
-        }, 'Gallery'),
-        buttonTemplate(
-          () {
-            captureImageFromCamera();
-          },
-          'Camera',
+        imageRetakeNeeded
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buttonTemplate(
+                      () {
+                        pickImageFromGallery();
+                      },
+                      'Gallery',
+                    ),
+                    buttonTemplate(
+                      () {
+                        captureImageFromCamera();
+                      },
+                      'Camera',
+                    ),
+                  ],
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buttonTemplate(() {
+                    addCaloriesToDatabase(result);
+                    // print('save calories button pressed');
+                    setState(() {
+                      databaseUpdated = true;
+                      imageRetakeNeeded = true;
+                    });
+                    showSnackBar();
+                  }, 'Save Calories'),
+                  buttonTemplate(() {
+                    // print('choose another image pressed');
+                    setState(() {
+                      imageRetakeNeeded = true;
+                    });
+                  }, 'Choose Another Image'),
+                ],
+              ),
+        //text input here
+        SizedBox(
+          width: 337.1,
+          child: 
+        Material(
+          elevation: 10,
+          shadowColor: Colors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(4),
+          color: const Color(0xFFe9e6df),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
+            controller: _calorieController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: "Enter Calories Here",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 131, 129, 125)),
+              labelText: 'Manually Enter Calories',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              floatingLabelAlignment: FloatingLabelAlignment.center,
+            ),
+            validator: (value) {
+              if (value == null) {
+                return null;
+              }
+              if (int.tryParse(value) is! int) {
+                return 'Please enter your calories.';
+              }
+              return null;
+            },
+            onFieldSubmitted: (result) {
+              if (_calorieController.text.isNotEmpty) {
+                addCaloriesToDatabase(_calorieController.value.text);
+                showSnackBar();
+                _calorieController.clear();
+              }
+            },
+          ),
+        ),
         ),
       ],
     );
@@ -162,31 +233,7 @@ class _NutritionPageState extends State<NutritionPage> {
             style: const TextStyle(fontSize: 24),
           ),
         ),
-        //displays chooseImageButtons if a retake is needed
-        imageRetakeNeeded
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: chooseImageButtons(),
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buttonTemplate(() {
-                    addCaloriesToDatabase();
-                    // print('save calories button pressed');
-                    setState(() {
-                      databaseUpdated = true;
-                    });
-                    showSnackBar();
-                  }, 'Save Calories'),
-                  buttonTemplate(() {
-                    // print('choose another image pressed');
-                    setState(() {
-                      imageRetakeNeeded = true;
-                    });
-                  }, 'Choose Another Image'),
-                ],
-              ),
+        chooseImageButtons(),
       ],
     );
   }
@@ -245,8 +292,9 @@ class _NutritionPageState extends State<NutritionPage> {
     );
   }
 
-  void addCaloriesToDatabase() async {
+  void addCaloriesToDatabase(String calories) async {
+    // print("result: $calories");
     await DatabaseHelper.instance.incrementCaloriesForDay(DateTime.now().day,
-        DateTime.now().month, DateTime.now().year, int.parse(result));
+        DateTime.now().month, DateTime.now().year, int.parse(calories));
   }
 }

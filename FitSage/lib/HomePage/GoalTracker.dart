@@ -234,7 +234,6 @@ class _GoalTrackerState extends State<GoalTracker> {
 
     return Text(text, style: style, textAlign: TextAlign.right);
   }
-
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
@@ -244,24 +243,24 @@ class _GoalTrackerState extends State<GoalTracker> {
         horizontalInterval: 1,
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: const Color(0xFFe9e6df),
+          return const FlLine(
+            color: Color(0xFFe9e6df),
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: const Color(0xFFe9e6df),
+          return const FlLine(
+            color: Color(0xFFe9e6df),
             strokeWidth: 1,
           );
         },
       ),
       titlesData: FlTitlesData(
         show: true,
-        rightTitles: AxisTitles(
+        rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: AxisTitles(
+        topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
         bottomTitles: AxisTitles(
@@ -321,7 +320,7 @@ class _GoalTrackerState extends State<GoalTracker> {
           ),
           barWidth: 5,
           isStrokeCapRound: false,
-          dotData: FlDotData(
+          dotData: const FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
